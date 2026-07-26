@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liebe ohne Altersgrenzen – Das interaktive Beziehungsjournal</title>
+<meta name="description" content="Das interaktive Beziehungsjournal für Paare, die sich bewusster verstehen und gemeinsam wachsen möchten. Vierzehn Kapitel, persönliche Auswertungen, ein gemeinsames Manifest.">
+<meta name="theme-color" content="#FAF7F2">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="Liebe ohne Altersgrenzen">
+<meta property="og:description" content="Das interaktive Beziehungsjournal für Paare, die sich bewusster verstehen und gemeinsam wachsen möchten.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #FAF7F2; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  body { font-family: 'Poppins', sans-serif; color: #4A3B2E; }
+  input, textarea, button, select { font-family: inherit; font-size: 16px; }
+  textarea { -webkit-appearance: none; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+    outline: 3px solid #8E4C36; outline-offset: 2px; border-radius: 4px;
+  }
+  ::placeholder { color: #8A7A66; opacity: 1; }
+  img, svg { max-width: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+  /* Druckansicht: nur das Manifest */
+  @media print {
+    body { background: #fff; }
+    .no-print, header, nav { display: none !important; }
+    main { padding: 0 !important; max-width: none !important; }
+    #manifest { border: none !important; padding: 0 !important; page-break-inside: avoid; }
+  }
+  #boot { padding: 70px 26px; text-align: center; }
+</style>
+</head>
+<body>
+<div id="root"><div id="boot">
+  <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:31px;color:#4A3B2E;margin:0 0 10px">Liebe ohne Altersgrenzen</p>
+  <p style="font-size:15px;font-weight:300;color:#5F5245;margin:0">Wird geladen …</p>
+</div></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script>
+if (!window.React || !window.ReactDOM) {
+  document.getElementById("boot").innerHTML =
+    '<p style="font-family:Poppins,sans-serif;font-size:15px;color:#4A3B2E;line-height:1.6">' +
+    'Das Journal konnte nicht geladen werden. Bitte prüft eure Internetverbindung und ladet die Seite neu.</p>';
+}
+</script>
+<script>
+(() => {
+  const { useState, useEffect, useRef, useCallback, useMemo } = React;
+  const Ico = ({ size = 16, color = "currentColor", children, style }) => /* @__PURE__ */ React.createElement(
+    "svg",
+    {
+      width: size,
+      height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: color,
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      style
+    },
+    children
+  );
+  const Check = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("polyline", { points: "20 6 9 17 4 12" }));
+  const ChevronLeft = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("polyline", { points: "15 18 9 12 15 6" }));
+  const ChevronRight = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("polyline", { points: "9 18 15 12 9 6" }));
+  const Copy = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("rect", { x: "9", y: "9", width: "13", height: "13", rx: "2" }), /* @__PURE__ */ React.createElement("path", { d: "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" }));
+  const RotateCcw = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("polyline", { points: "1 4 1 10 7 10" }), /* @__PURE__ */ React.createElement("path", { d: "M3.51 15a9 9 0 1 0 2.13-9.36L1 10" }));
+  const Printer = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("polyline", { points: "6 9 6 2 18 2 18 9" }), /* @__PURE__ */ React.createElement("path", { d: "M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" }), /* @__PURE__ */ React.createElement("rect", { x: "6", y: "14", width: "12", height: "8" }));
+  const Lock = (p) => /* @__PURE__ */ React.createElement(Ico, { ...p }, /* @__PURE__ */ React.createElement("rect", { x: "3", y: "11", width: "18", height: "11", rx: "2" }), /* @__PURE__ */ React.createElement("path", { d: "M7 11V7a5 5 0 0 1 10 0v4" }));
+  const C = {
+    paper: "#FAF7F2",
+    sand: "#F1E9DE",
+    taupe: "#E5DACB",
+    line: "#D4C6B3",
+    ink: "#4A3B2E",
+    body: "#5F5245",
+    muted: "#665847",
+    terra: "#8E4C36",
+    terraSoft: "#F5E7E0",
+    sage: "#55624D",
+    sageSoft: "#EAEEE5",
+    white: "#FFFDFA"
+  };
+  const SERIF = "'Cormorant Garamond', Georgia, serif";
+  const SANS = "'Poppins', 'Helvetica Neue', Arial, sans-serif";
+  const HAND = "'Dancing Script', cursive";
+  const STORAGE_KEY = "liebe-ohne-altersgrenzen-journal";
+  const store = {
+    async get(k) {
+      if (typeof window !== "undefined" && window.storage) return window.storage.get(k, false);
+      const v = localStorage.getItem(k);
+      if (v === null) throw new Error("noch nichts gespeichert");
+      return { value: v };
+    },
+    async set(k, v) {
+      if (typeof window !== "undefined" && window.storage) return window.storage.set(k, v, false);
+      localStorage.setItem(k, v);
+      return true;
+    },
+    async del(k) {
+      if (typeof window !== "undefined" && window.storage) return window.storage.delete(k, false);
+      localStorage.removeItem(k);
+      return true;
+    }
+  };
+  const CH = [
+    { id: 1, title: "Unsere Geschichte", mode: "gemeinsam", teaser: "Wie alles anfing – und was daraus geworden ist." },
+    { id: 2, title: "Ich sehe dich", mode: "erst allein", teaser: "Wodurch fühlt ihr euch geliebt? Und wann übersehen?" },
+    { id: 3, title: "Kommunikation", mode: "erst allein", teaser: "Eine Gebrauchsanweisung für euch selbst." },
+    { id: 4, title: "Konflikte & Reparatur", mode: "erst allein", teaser: "Wie ihr streitet – und wie ihr wieder zueinander findet." },
+    { id: 5, title: "Werte & Lebensentwürfe", mode: "erst allein", teaser: "Was euch wirklich wichtig ist, einzeln und zusammen." },
+    { id: 6, title: "Geld & Entscheidungen", mode: "gemeinsam", teaser: "Verantwortung, Sicherheit und wer was entscheidet." },
+    { id: 7, title: "Nähe & Zärtlichkeit", mode: "erst allein", teaser: "Privat reflektieren, freiwillig teilen." },
+    { id: 8, title: "Außenwelt & Grenzen", mode: "gemeinsam", ageGap: true, teaser: "Was gehört euch – und was gehört den anderen?" },
+    { id: 9, title: "Balance", mode: "erst allein", ageGap: true, teaser: "Fühlen sich beide Stimmen gleich wertvoll an?" },
+    { id: 10, title: "Lebensphasen", mode: "gemeinsam", ageGap: true, teaser: "Unterschiedliche Zeitpunkte, ein gemeinsamer Weg." },
+    { id: 11, title: "Unsere Zukunft", mode: "gemeinsam", teaser: "In einem Jahr, in fünf, in zehn – und später." },
+    { id: 12, title: "Alltag & Rituale", mode: "gemeinsam", teaser: "Kleine verlässliche Momente statt großer Vorsätze." },
+    { id: 13, title: "Unser Manifest", mode: "gemeinsam", teaser: "Alles Wichtige auf einer Seite, aus euren Antworten." },
+    { id: 14, title: "Brief an dich", mode: "erst allein", teaser: "Warum ich mich heute wieder für dich entscheide." }
+  ];
+  const USE_MODES = [
+    { k: "abend", label: "Gemeinsam an einem Abend", note: "Nehmt euch drei bis vier Stunden. Handys weg, etwas zu trinken, keine Termine danach." },
+    { k: "etappen", label: "In mehreren Etappen", note: "Ein bis zwei Kapitel pro Woche. So bleibt Zeit, dass Gesagtes nachwirkt." },
+    { k: "getrennt", label: "Erst getrennt, dann gemeinsam", note: "Jede:r füllt die persönlichen Teile allein aus. Danach setzt ihr euch zusammen und vergleicht." },
+    { k: "checkin", label: "Als regelmäßiger Check-in", note: "Einmal im Quartal oder zum Jahrestag. Ältere Antworten bleiben erhalten." }
+  ];
+  const STORY_Q = [
+    { k: "kennen", q: "Wie habt ihr euch kennengelernt?", hint: "Erzählt es so, wie ihr es Freunden erzählen würdet – mit den Details, die sonst wegfallen.", ph: "Wo wart ihr, wer hat zuerst etwas gesagt, was war der erste Eindruck?" },
+    { k: "anziehung", q: "Was hat euch am Anfang aneinander angezogen?", hint: "Nicht nur das Offensichtliche. Oft war es eine Kleinigkeit.", ph: "Zum Beispiel: die Art zu lachen, eine Ruhe, ein bestimmter Satz …" },
+    { k: "ernst", q: "Wann wurde euch klar, dass es ernst wird?", hint: "Es gibt selten einen großen Moment. Meistens ist es ein unspektakulärer.", ph: "Zum Beispiel: als klar war, wen ich anrufe, wenn etwas passiert." },
+    { k: "erinnerung", q: "Welche Erinnerung beschreibt eure Beziehung besonders gut?", hint: "Nicht die schönste. Die typischste.", ph: "" },
+    { k: "bewundern", q: "Was bewundert ihr heute aneinander?", hint: "Heute, nicht damals. Das ist oft etwas anderes geworden.", ph: "" },
+    { k: "gewachsen", q: "Was ist seit dem Anfang gewachsen?", hint: "Vertrauen, Gelassenheit, Humor, Selbstverständlichkeit – was davon trifft zu?", ph: "" }
+  ];
+  const AFFECTION = [
+    { k: "worte", label: "Worte", desc: "Gesagt zu bekommen, was jemand an dir schätzt. Anerkennung, Ermutigung, ein ehrliches Kompliment.", give: "Sag einmal am Tag etwas Konkretes statt etwas Allgemeines.", miss: "Schweigen liest du schnell als Distanz, auch wenn keine gemeint ist." },
+    { k: "zeit", label: "Gemeinsame Zeit", desc: "Ungeteilte Aufmerksamkeit. Nicht im selben Raum sein, sondern wirklich beieinander.", give: "Zwanzig Minuten ohne Handy zählen mehr als ein halber Abend nebenbei.", miss: "Halbe Anwesenheit fühlt sich für dich schlimmer an als Abwesenheit." },
+    { k: "hilfe", label: "Unterstützung", desc: "Dass jemand etwas tut. Aufgaben abnimmt, mitdenkt, entlastet.", give: "Übernimm eine wiederkehrende Aufgabe ganz, statt einmalig zu helfen.", miss: "Schöne Worte ohne Taten klingen für dich schnell hohl." },
+    { k: "beruehrung", label: "Berührung", desc: "Körperliche Nähe im Alltag. Die Hand im Vorbeigehen, eine lange Umarmung.", give: "Zehn Sekunden umarmen statt zwei. Der Unterschied ist erstaunlich groß.", miss: "Ohne Berührung fühlst du dich weit weg, auch wenn sonst alles stimmt." },
+    { k: "gesten", label: "Kleine Aufmerksamkeiten", desc: "Etwas mitbringen, an etwas denken, eine Kleinigkeit besorgen. Es geht um den Gedanken, nicht den Wert.", give: "Merk dir, was beiläufig erwähnt wird, und komm später darauf zurück.", miss: "Du merkst genau, ob jemand an dich gedacht hat, als du nicht dabei warst." }
+  ];
+  const SEEN_Q = [
+    { k: "geliebt", q: "Wodurch fühle ich mich geliebt?", hint: "Denk an einen konkreten Moment der letzten Wochen.", ph: "" },
+    { k: "uebersehen", q: "Wann fühle ich mich übersehen?", hint: "Das darf unangenehm sein. Es ist kein Vorwurf, nur eine Information.", ph: "" },
+    { k: "gesten", q: "Welche kleinen Gesten bedeuten mir viel?", hint: "Gerade die, die von außen unspektakulär aussehen.", ph: "" },
+    { k: "haeufiger", q: "Was wünsche ich mir häufiger?", hint: "Formulier es als Wunsch, nicht als Kritik. „Ich hätte gern …“ statt „Du nie …“", ph: "" },
+    { k: "bewundere", q: "Was bewundere ich an meinem Gegenüber?", hint: "", ph: "" },
+    { k: "unverstanden", q: "Was versteht mein Gegenüber vielleicht noch nicht ganz über mich?", hint: "Das ist oft der wertvollste Satz im ganzen Kapitel.", ph: "", optional: true }
+  ];
+  const COMM_Q = [
+    { k: "ansprechen", q: "Wie spreche ich schwierige Themen an?", hint: "Direkt, vorsichtig, spät, gar nicht? Beschreib es ehrlich.", ph: "" },
+    { k: "sicher", q: "Was brauche ich, um mich sicher zu öffnen?", hint: "Ruhe, Zeit, Blickkontakt, keine Zuschauer, die Zusage nicht unterbrochen zu werden?", ph: "" },
+    { k: "abwehr", q: "Welche Aussagen lösen bei mir sofort Abwehr aus?", hint: "Zum Beispiel: „Du immer …“, „Jetzt sei nicht so empfindlich“, „Das bildest du dir ein“.", ph: "" },
+    { k: "zuhoeren", q: "Höre ich zu, um zu verstehen – oder um zu antworten?", hint: "Beides ist menschlich. Interessant ist, wann welches passiert.", ph: "" },
+    { k: "konflikt", q: "Was wünsche ich mir in Konflikten?", hint: "", ph: "" }
+  ];
+  const REACH_ME = [
+    { k: "still", start: "Wenn ich still werde, bedeutet das meistens …", ph: "… dass ich sortiere, nicht dass ich beleidigt bin." },
+    { k: "gereizt", start: "Wenn ich gereizt wirke, brauche ich eigentlich …", ph: "… kurz Luft und danach die Frage, was los ist." },
+    { k: "sensibel", start: "Sensible Themen sprichst du am besten so mit mir an …", ph: "… nicht zwischen Tür und Angel, sondern wenn wir Zeit haben." },
+    { k: "zurueck", start: "Was mir hilft, wieder auf dich zuzugehen, ist …", ph: "… ein erster Schritt von dir, auch ein kleiner." },
+    { k: "niemals", start: "Was mich in einem Streit sofort verschließt, ist …", ph: "" },
+    { k: "sicher", start: "Woran du merkst, dass es mir gerade wirklich gut geht …", ph: "" }
+  ];
+  const CONFLICT = [
+    {
+      k: "rueckzug",
+      label: "Ich ziehe mich zurück",
+      strength: "Du eskalierst nicht. Du sagst im Affekt selten etwas, das du bereust.",
+      risk: "Dein Rückzug wird leicht als Desinteresse gelesen. Die andere Seite sieht nur, dass du weg bist – nicht, dass du zurückkommst.",
+      step: "Sag beim Rückzug einen Satz dazu: wie lange du brauchst und dass du wiederkommst. Das macht aus Flucht eine Pause."
+    },
+    {
+      k: "angriff",
+      label: "Ich werde laut oder scharf",
+      strength: "Bei dir bleibt nichts unausgesprochen. Man weiß immer, woran man ist.",
+      risk: "Tempo und Lautstärke überfahren die andere Seite. Was du als Klärung meinst, kommt als Angriff an.",
+      step: "Zähl innerlich bis drei und sag den Satz noch einmal – langsamer und ohne „du“ am Anfang."
+    },
+    {
+      k: "rechtfertigen",
+      label: "Ich rechtfertige mich sofort",
+      strength: "Dir ist wichtig, richtig verstanden zu werden. Das zeigt, dass dir die Beziehung nicht egal ist.",
+      risk: "Wer sich erklärt, hört in dem Moment nicht zu. Die andere Seite fühlt sich dann doppelt übergangen.",
+      step: "Frag zuerst: „Habe ich richtig verstanden, dass …?“ Deine Erklärung kommt danach – sie läuft dir nicht weg."
+    },
+    {
+      k: "harmonie",
+      label: "Ich lenke ein, damit Ruhe ist",
+      strength: "Du kannst deeskalieren wie kaum jemand. Aus Meinungsverschiedenheiten wird bei dir kein Krieg.",
+      risk: "Was du schluckst, verschwindet nicht. Es sammelt sich und kommt später als etwas raus, das nicht zum Anlass passt.",
+      step: "Sag einmal pro Streit einen Satz, der dir unangenehm ist. Nur einen. Das reicht für den Anfang."
+    },
+    {
+      k: "loesung",
+      label: "Ich will sofort eine Lösung",
+      strength: "Du bleibst handlungsfähig, wenn andere feststecken.",
+      risk: "Nicht jedes Gefühl ist ein Problem, das gelöst werden will. Manchmal will es nur gehört werden.",
+      step: "Frag: „Willst du eine Idee von mir – oder erstmal nur erzählen?“ Diese Frage rettet erstaunlich viele Abende."
+    },
+    {
+      k: "ueberfordert",
+      label: "Ich bin schnell überfordert",
+      strength: "Du spürst früh, wenn ein Gespräch kippt. Diese Antenne haben nicht viele.",
+      risk: "Überforderung sieht von außen aus wie Gleichgültigkeit oder Drama – beides trifft es nicht.",
+      step: "Vereinbart ein Wort oder Zeichen, das heißt: Ich bin raus, aber nicht weg. Danach die Pause-Regel unten."
+    }
+  ];
+  const PAUSE_Q = [
+    { k: "erkennen", q: "Woran erkennen wir, dass wir eine Pause brauchen?", hint: "Konkrete Zeichen: lauter werden, im Kreis reden, Sätze mit „immer“ und „nie“.", ph: "" },
+    { k: "dauer", q: "Wie lange darf eine Pause dauern?", hint: "Legt eine Zahl fest. Unbestimmte Pausen fühlen sich für den Wartenden wie Bestrafung an.", ph: "Zum Beispiel: mindestens 20 Minuten, höchstens bis zum nächsten Morgen." },
+    { k: "zusage", q: "Wie versichern wir uns, dass das Gespräch weitergeht?", hint: "Ein fester Satz, den beide kennen.", ph: "Zum Beispiel: „Ich bin nicht weg. Wir reden nach dem Abendessen weiter.“" },
+    { k: "zurueck", q: "Wie finden wir danach wieder zueinander?", hint: "Was ist der erste Schritt – und wer macht ihn?", ph: "" }
+  ];
+  const VALUES = [
+    "Familie",
+    "Freiheit",
+    "Sicherheit",
+    "Karriere",
+    "Reisen",
+    "Heimat",
+    "Gesundheit",
+    "Abenteuer",
+    "Geld",
+    "Persönliche Entwicklung",
+    "Kinder",
+    "Spiritualität",
+    "Freundschaften",
+    "Ehrlichkeit",
+    "Verlässlichkeit",
+    "Humor",
+    "Ruhe",
+    "Nähe",
+    "Unabhängigkeit",
+    "Respekt",
+    "Kreativität",
+    "Natur",
+    "Ordnung",
+    "Spontaneität",
+    "Zusammenhalt",
+    "Großzügigkeit",
+    "Neugier",
+    "Tradition",
+    "Gerechtigkeit",
+    "Gelassenheit",
+    "Leidenschaft",
+    "Loyalität",
+    "Mut",
+    "Wertschätzung",
+    "Zugehörigkeit",
+    "Selbstbestimmung"
+  ];
+  const SCRIBBLES = [
+    "M50 7C79 6 96 22 96 49C96 77 78 94 49 94C21 94 4 76 4 49C4 23 21 8 45 6",
+    "M52 5C81 8 97 25 95 52C93 79 74 95 46 94C19 93 3 74 5 47C7 22 25 7 50 6C58 6 66 8 70 11",
+    "M48 8C77 5 95 24 96 51C97 76 77 95 48 95C22 95 4 75 5 48C6 24 22 9 44 7"
+  ];
+  const MONEY_Q = [
+    { k: "entscheiden", q: "Wie treffen wir finanzielle Entscheidungen?", hint: "Getrennt, gemeinsam, ab einer bestimmten Summe? Beschreibt, wie es tatsächlich läuft.", ph: "" },
+    { k: "sicherheit", q: "Was bedeutet finanzielle Sicherheit für uns?", hint: "Das ist selten dieselbe Zahl. Für manche sind es Rücklagen, für andere ein fester Job.", ph: "" },
+    { k: "verantwortung", q: "Wer übernimmt bei uns welche Verantwortung?", hint: "Auch unsichtbare Aufgaben zählen: Termine, Überblick, Planung.", ph: "" },
+    { k: "einkommen", q: "Wie gehen wir mit unterschiedlichen Einkommen um?", hint: "Gleiche Beträge oder gleiche Anteile? Beides ist möglich, wichtig ist nur, dass es besprochen ist.", ph: "" },
+    { k: "augenhoehe", q: "Wie sorgen wir dafür, dass beide auf Augenhöhe entscheiden?", hint: "Besonders dann, wenn eine Seite mehr einbringt als die andere.", ph: "" },
+    { k: "transparenz", q: "Wo wünschen wir uns mehr Transparenz?", hint: "", ph: "", optional: true }
+  ];
+  const CLOSE_PRIVATE = [
+    { k: "nah", q: "Wann fühle ich mich emotional nah?", hint: "", ph: "" },
+    { k: "distanz", q: "Was schafft für mich Distanz?", hint: "Oft sind es Kleinigkeiten im Alltag, nicht die großen Themen.", ph: "" },
+    { k: "bedeutung", q: "Was bedeutet Intimität für mich – abseits von allem Körperlichen?", hint: "", ph: "" },
+    { k: "stress", q: "Wie verändert Stress meine Nähe?", hint: "Manche suchen dann mehr Nähe, andere brauchen mehr Abstand. Beides ist normal.", ph: "" },
+    { k: "fehlt", q: "Welche Form von Zärtlichkeit fehlt mir manchmal?", hint: "", ph: "", optional: true }
+  ];
+  const CLOSE_TOGETHER = [
+    "Was war ein Moment, in dem du dich mir besonders nah gefühlt hast?",
+    "Woran merkst du, dass ich gerade nicht erreichbar bin?",
+    "Was wünschst du dir mehr – und was weniger?",
+    "Wie können wir über dieses Thema reden, ohne dass es sich wie eine Prüfung anfühlt?",
+    "Gibt es etwas, das du dich bisher nicht getraut hast zu sagen?"
+  ];
+  const OUTSIDE_TOPICS = [
+    "Wie wir uns kennengelernt haben",
+    "Unser Altersunterschied",
+    "Unsere Zukunftspläne",
+    "Wie wir mit Geld umgehen",
+    "Ob und wann wir Kinder wollen",
+    "Wie es uns als Paar gerade geht",
+    "Was in unserem Schlafzimmer passiert",
+    "Konflikte, die wir gerade haben",
+    "Gesundheitliche Themen",
+    "Was Familie oder Freunde über uns gesagt haben"
+  ];
+  const REPLIES = [
+    { tone: "Freundlich", lines: ["Danke für die Sorge – uns geht es wirklich gut.", "Schön, dass dich das interessiert. Uns passt es so.", "Wir haben das für uns geklärt."] },
+    { tone: "Humorvoll", lines: ["Ja, wir haben nachgerechnet. Es passt trotzdem.", "Stimmt, wir sind ein statistischer Ausreißer.", "Das fragen wir uns auch jeden Morgen. Und dann frühstücken wir."] },
+    { tone: "Klar", lines: ["Das ist unsere Entscheidung, und die steht.", "Ich möchte darüber nicht diskutieren.", "Ihr müsst das nicht verstehen. Nur respektieren."] },
+    { tone: "Gespräch beenden", lines: ["Ich wechsle jetzt das Thema.", "Dazu sage ich nichts mehr.", "Lass uns über etwas anderes reden."] }
+  ];
+  const BALANCE_AREAS = [
+    "Geld",
+    "Wohnen",
+    "Freizeit",
+    "Freundschaften",
+    "Familienplanung",
+    "Karriere",
+    "Große Anschaffungen",
+    "Reisen",
+    "Alltag"
+  ];
+  const BALANCE_SCALE = [
+    { v: 0, label: "Eher die andere Seite" },
+    { v: 1, label: "Leicht ungleich" },
+    { v: 2, label: "Ausgewogen" },
+    { v: 3, label: "Eher ich" }
+  ];
+  const PHASE_TOPICS = [
+    { k: "karriere", label: "Ausbildung & Karriere", q: "Was steht bei jedem von uns beruflich in den nächsten Jahren an?" },
+    { k: "kinder", label: "Kinderwunsch & Elternschaft", q: "Wo stehen wir bei diesem Thema – und wann wollen wir wieder darüber sprechen?" },
+    { k: "energie", label: "Energie & Freizeit", q: "Wie unterschiedlich sind unsere Bedürfnisse nach Ruhe und nach Unternehmung?" },
+    { k: "wohnen", label: "Wohnort", q: "Wo wollen wir leben – und was hängt für jeden von uns daran?" },
+    { k: "ruhestand", label: "Arbeiten & Ruhestand", q: "Wie stellen wir uns die Zeit vor, in der einer von uns weniger arbeitet?" },
+    { k: "gesundheit", label: "Gesundheit & Fürsorge", q: "Was möchten wir geregelt haben, bevor es jemand regeln muss?" },
+    { k: "freunde", label: "Freundeskreise", q: "Wie gehen wir damit um, dass unsere Umfelder unterschiedlich sein können?" }
+  ];
+  const HORIZONS = [
+    { k: "jahr", label: "In einem Jahr", note: "Nah genug, dass es konkret werden muss." },
+    { k: "fuenf", label: "In fünf Jahren", note: "Weit genug für größere Entscheidungen." },
+    { k: "zehn", label: "In zehn Jahren", note: "Hier zeigt sich, ob eure Richtungen zusammenpassen." },
+    { k: "spaeter", label: "Später im Leben", note: "Der Teil, über den die wenigsten Paare je sprechen." }
+  ];
+  const FUTURE_AREAS = [
+    "Beziehung",
+    "Familie",
+    "Wohnen",
+    "Reisen",
+    "Arbeit",
+    "Gesundheit",
+    "Finanzen",
+    "Persönliche Entwicklung",
+    "Gemeinsame Erlebnisse"
+  ];
+  const RITUAL_IDEAS = [
+    "Ein fester Abend pro Woche, der nicht verschoben wird",
+    "Beim Rausgehen und Reinkommen kurz umarmen",
+    "Sonntags fünf Minuten die Woche besprechen",
+    "Einmal im Monat etwas machen, das keiner von uns kennt",
+    "Handys beim Essen in einen anderen Raum",
+    "Abends erzählen, was heute gut war",
+    "Einmal im Quartal ein längeres Gespräch über uns",
+    "Sich gegenseitig etwas mitbringen, ohne Anlass"
+  ];
+  const SEASON_DATES = {
+    fruehling: ["Den ersten warmen Abend draußen verbringen, ohne Plan", "Auf einem Markt je drei Zutaten blind kaufen und daraus kochen", "Eine Fahrradtour zu einem Ort, an dem keiner von euch war", "Frühstück im Grünen, mit Decke und zu viel Essen", "Einmal richtig früh aufstehen und den Sonnenaufgang anschauen"],
+    sommer: ["Abends baden gehen, wenn alle anderen schon weg sind", "Freiluftkino oder Autokino", "Eine Nacht draußen schlafen, notfalls im Garten", "Eisdielen-Tour: drei Läden, je eine Kugel, ihr kürt die beste", "Spontan ins Auto und zwei Stunden in eine Richtung fahren"],
+    herbst: ["Waldspaziergang und danach heiße Schokolade", "Zusammen etwas backen, das schiefgehen darf", "Regentag auf dem Sofa, Handys aus, zwei Filme", "Flohmarkt, und jeder sucht dem anderen etwas unter fünf Euro", "Ein altes Fotoalbum durchgehen, jeder erzählt drei Geschichten"],
+    winter: ["Ein Menü zu zweit kochen, drei Gänge, Kerzenlicht", "Schlittschuhlaufen, auch wenn es keiner kann", "Ein Wochenende irgendwo ohne Empfang", "Die Fotos des Jahres sortieren und ein Album machen", "Jahresrückblick: jeder nennt fünf Momente"]
+  };
+  const SEASONS = [
+    { k: "fruehling", label: "Frühling" },
+    { k: "sommer", label: "Sommer" },
+    { k: "herbst", label: "Herbst" },
+    { k: "winter", label: "Winter" }
+  ];
+  const IMPULSES = {
+    2: "Unterschiedliche Antworten bedeuten nicht automatisch Unvereinbarkeit.",
+    3: "Verstanden zu werden beginnt oft damit, genauer zu erklären, was in uns passiert.",
+    4: "Ein Konflikt ist nicht beendet, wenn niemand mehr spricht, sondern wenn wieder Verbindung entstanden ist.",
+    6: "Über Geld zu sprechen ist selten romantisch. Es nicht zu tun, wird irgendwann teurer.",
+    7: "Nähe entsteht nicht nur durch große Gespräche, sondern durch kleine verlässliche Momente.",
+    9: "Balance heißt nicht, dass alles exakt gleich verteilt ist. Sondern dass beide das Gefühl haben, gefragt zu werden.",
+    11: "Pläne, die niemand ausspricht, sind keine gemeinsamen Pläne.",
+    12: "Was ihr regelmäßig tut, prägt eure Beziehung mehr als das, was ihr euch vornehmt."
+  };
+  const MILESTONES = [
+    { at: 25, title: "Ein Viertel geschafft", text: "Ihr habt bereits über Dinge gesprochen, die im Alltag oft unausgesprochen bleiben. Das ist mehr, als die meisten Paare bewusst tun." },
+    { at: 50, title: "Halbzeit", text: "Nehmt euch ruhig eine Pause und kommt später zurück. Alles bleibt gespeichert. Manches wirkt sowieso erst über Nacht nach." },
+    { at: 75, title: "Drei Viertel", text: "Ab hier geht es weniger ums Sammeln und mehr ums Verbinden. Die letzten Kapitel führen eure Antworten zusammen." },
+    { at: 100, title: "Angekommen", text: "Ihr habt euch durch alle vierzehn Kapitel gearbeitet. Das Manifest und der Brief bleiben – kommt in ein paar Monaten wieder her." }
+  ];
+  const DISCLAIMER = "Dieses Workbook dient der persönlichen Reflexion und dem gemeinsamen Gespräch. Es ersetzt keine Paarberatung, Psychotherapie, medizinische oder rechtliche Beratung. Bei Gewalt, Kontrolle, Angst oder akutem Unterstützungsbedarf wendet euch bitte an eine geeignete professionelle Beratungsstelle.";
+  const PRIVACY = "Eure Eingaben werden ausschließlich lokal in eurem Browser gespeichert und nicht an uns oder Dritte übertragen.";
+  function Kicker({ children, color }) {
+    return /* @__PURE__ */ React.createElement("div", { style: {
+      fontFamily: SANS,
+      fontSize: 12,
+      letterSpacing: 2.6,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      color: color || C.terra,
+      marginBottom: 12
+    } }, children);
+  }
+  function H2({ children }) {
+    return /* @__PURE__ */ React.createElement("h2", { style: {
+      fontFamily: SERIF,
+      fontWeight: 500,
+      fontSize: "clamp(31px, 7.4vw, 46px)",
+      lineHeight: 1.1,
+      color: C.ink,
+      margin: 0
+    } }, children);
+  }
+  function H3({ children, style }) {
+    return /* @__PURE__ */ React.createElement("h3", { style: {
+      fontFamily: SERIF,
+      fontWeight: 500,
+      fontSize: 24,
+      lineHeight: 1.2,
+      color: C.ink,
+      margin: "0 0 12px",
+      ...style
+    } }, children);
+  }
+  function P({ children, style }) {
+    return /* @__PURE__ */ React.createElement("p", { style: {
+      fontFamily: SANS,
+      fontSize: 15.5,
+      fontWeight: 300,
+      lineHeight: 1.72,
+      color: C.body,
+      margin: "0 0 14px",
+      ...style
+    } }, children);
+  }
+  function Card({ children, style, tone }) {
+    const bg = tone === "white" ? C.white : tone === "sage" ? C.sageSoft : tone === "terra" ? C.terraSoft : C.sand;
+    return /* @__PURE__ */ React.createElement("section", { style: {
+      background: bg,
+      borderRadius: 16,
+      padding: "26px 22px 28px",
+      marginBottom: 20,
+      ...style
+    } }, children);
+  }
+  function Lead({ children }) {
+    return /* @__PURE__ */ React.createElement("div", { style: { borderLeft: `2px solid ${C.terra}`, paddingLeft: 18, margin: "0 0 30px" } }, React.Children.map(children, (c, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: {
+      fontFamily: SERIF,
+      fontSize: 19.5,
+      fontStyle: "italic",
+      fontWeight: 400,
+      lineHeight: 1.55,
+      color: C.ink,
+      margin: i === 0 ? "0 0 12px" : 0
+    } }, c)));
+  }
+  function Impulse({ text }) {
+    if (!text) return null;
+    return /* @__PURE__ */ React.createElement("div", { style: {
+      background: C.sageSoft,
+      borderRadius: 14,
+      padding: "22px 24px",
+      marginBottom: 20,
+      textAlign: "center"
+    } }, /* @__PURE__ */ React.createElement("div", { style: { color: C.sage, fontSize: 15, letterSpacing: 7, marginBottom: 10 } }, "✦"), /* @__PURE__ */ React.createElement("p", { style: {
+      fontFamily: SERIF,
+      fontSize: 20,
+      fontStyle: "italic",
+      fontWeight: 400,
+      lineHeight: 1.5,
+      color: C.ink,
+      margin: 0
+    } }, text));
+  }
+  function Result({ title, children }) {
+    return /* @__PURE__ */ React.createElement("section", { style: {
+      background: C.white,
+      border: `1px solid ${C.terra}`,
+      borderRadius: 16,
+      padding: "26px 22px 28px",
+      marginBottom: 20
+    } }, /* @__PURE__ */ React.createElement(Kicker, null, title), children);
+  }
+  function Btn({ children, onClick, variant = "solid", small, full, style, title }) {
+    const skin = variant === "solid" ? { background: C.terra, color: C.white, borderColor: C.terra } : variant === "quiet" ? { background: "transparent", color: C.body, borderColor: C.line } : { background: C.white, color: C.ink, borderColor: C.line };
+    return /* @__PURE__ */ React.createElement("button", { type: "button", onClick, title, style: {
+      fontFamily: SANS,
+      fontSize: small ? 13 : 15,
+      fontWeight: 500,
+      padding: small ? "10px 18px" : "14px 28px",
+      minHeight: 44,
+      border: "1px solid",
+      borderRadius: 40,
+      cursor: "pointer",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      width: full ? "100%" : "auto",
+      ...skin,
+      ...style
+    } }, children);
+  }
+  function Field({ label, hint, value, onChange, rows = 3, placeholder, optional, id }) {
+    const fid = id || `f-${(label || "").slice(0, 24).replace(/\W/g, "")}`;
+    return /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 24 } }, label && /* @__PURE__ */ React.createElement("label", { htmlFor: fid, style: {
+      display: "block",
+      fontFamily: SANS,
+      fontSize: 15,
+      fontWeight: 500,
+      color: C.ink,
+      marginBottom: hint ? 5 : 10,
+      lineHeight: 1.45
+    } }, label, optional && /* @__PURE__ */ React.createElement("span", { style: {
+      fontFamily: SANS,
+      fontSize: 11,
+      fontWeight: 500,
+      letterSpacing: 1,
+      textTransform: "uppercase",
+      color: C.muted,
+      marginLeft: 9,
+      border: `1px solid ${C.line}`,
+      borderRadius: 20,
+      padding: "2px 9px",
+      verticalAlign: "middle",
+      whiteSpace: "nowrap"
+    } }, "freiwillig")), hint && /* @__PURE__ */ React.createElement("div", { style: {
+      fontFamily: SANS,
+      fontSize: 13,
+      fontWeight: 300,
+      fontStyle: "italic",
+      color: C.muted,
+      marginBottom: 10,
+      lineHeight: 1.5
+    } }, hint), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        id: fid,
+        value: value || "",
+        rows,
+        placeholder: placeholder || "",
+        onChange: (e) => onChange(e.target.value),
+        style: {
+          width: "100%",
+          boxSizing: "border-box",
+          resize: "vertical",
+          fontFamily: SANS,
+          fontSize: 15.5,
+          fontWeight: 300,
+          lineHeight: 1.6,
+          color: C.ink,
+          background: C.white,
+          border: `1px solid ${C.line}`,
+          borderRadius: 10,
+          padding: "14px 16px",
+          outline: "none",
+          minHeight: 44
+        }
+      }
+    ));
+  }
+  function TextInput({ label, value, onChange, placeholder, numeric, flex = 1, id }) {
+    const fid = id || `i-${(label || "").slice(0, 20).replace(/\W/g, "")}`;
+    return /* @__PURE__ */ React.createElement("div", { style: { flex, minWidth: 0 } }, label && /* @__PURE__ */ React.createElement("label", { htmlFor: fid, style: {
+      display: "block",
+      fontFamily: SANS,
+      fontSize: 12,
+      fontWeight: 500,
+      letterSpacing: 1,
+      textTransform: "uppercase",
+      color: C.muted,
+      marginBottom: 7
+    } }, label), /* @__PURE__ */ React.createElement(
+      "input",
+      {
+        id: fid,
+        value: value || "",
+        placeholder: placeholder || "",
+        inputMode: numeric ? "numeric" : "text",
+        onChange: (e) => onChange(numeric ? e.target.value.replace(/[^0-9]/g, "").slice(0, 3) : e.target.value),
+        style: {
+          width: "100%",
+          boxSizing: "border-box",
+          fontFamily: SANS,
+          fontSize: 15.5,
+          fontWeight: 300,
+          color: C.ink,
+          background: C.white,
+          border: `1px solid ${C.line}`,
+          borderRadius: 10,
+          padding: "13px 15px",
+          outline: "none",
+          minHeight: 44
+        }
+      }
+    ));
+  }
+  function Choice({ label, note, selected, onClick, box = "check", disabled }) {
+    return /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        type: "button",
+        onClick,
+        disabled,
+        "aria-pressed": selected,
+        style: {
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 13,
+          width: "100%",
+          textAlign: "left",
+          padding: "14px 16px",
+          marginBottom: 9,
+          cursor: disabled ? "default" : "pointer",
+          borderRadius: 12,
+          minHeight: 44,
+          border: `1px solid ${selected ? C.terra : C.line}`,
+          background: selected ? C.terra : C.white,
+          color: selected ? C.white : C.body,
+          opacity: disabled && !selected ? 0.45 : 1
+        }
+      },
+      /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: {
+        width: 19,
+        height: 19,
+        flexShrink: 0,
+        marginTop: 2,
+        borderRadius: box === "radio" ? "50%" : 6,
+        border: `1px solid ${selected ? C.white : C.line}`,
+        background: selected ? C.white : "transparent",
+        display: "grid",
+        placeItems: "center"
+      } }, selected && /* @__PURE__ */ React.createElement(Check, { size: 11, color: C.terra })),
+      /* @__PURE__ */ React.createElement("span", { style: { flex: 1 } }, /* @__PURE__ */ React.createElement("span", { style: { display: "block", fontFamily: SANS, fontSize: 15, fontWeight: 400, lineHeight: 1.5 } }, label), note && /* @__PURE__ */ React.createElement("span", { style: {
+        display: "block",
+        fontFamily: SANS,
+        fontSize: 13,
+        fontWeight: 300,
+        lineHeight: 1.5,
+        marginTop: 5,
+        color: selected ? "rgba(255,253,250,0.85)" : C.muted
+      } }, note))
+    );
+  }
+  function WhoTabs({ who, setWho, names, counts }) {
+    return /* @__PURE__ */ React.createElement("div", { role: "tablist", "aria-label": "Person auswählen", style: {
+      display: "flex",
+      background: C.taupe,
+      borderRadius: 40,
+      padding: 4,
+      marginBottom: 22
+    } }, ["a", "b"].map((k) => /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        key: k,
+        role: "tab",
+        "aria-selected": who === k,
+        type: "button",
+        onClick: () => setWho(k),
+        style: {
+          flex: 1,
+          padding: "12px 6px",
+          minHeight: 44,
+          cursor: "pointer",
+          border: "none",
+          borderRadius: 40,
+          background: who === k ? C.terra : "transparent",
+          color: who === k ? C.white : C.body,
+          fontFamily: SANS,
+          fontSize: 14.5,
+          fontWeight: 500
+        }
+      },
+      names[k],
+      counts && /* @__PURE__ */ React.createElement("span", { style: { fontWeight: 300, opacity: 0.8 } }, " (", counts[k], ")")
+    )));
+  }
+  function Pill({ children, tone }) {
+    const map = {
+      gap: { bg: C.terraSoft, fg: C.terra, bd: C.terra },
+      solo: { bg: "transparent", fg: C.muted, bd: C.line },
+      duo: { bg: C.sageSoft, fg: C.sage, bd: C.sage }
+    };
+    const t = map[tone] || map.solo;
+    return /* @__PURE__ */ React.createElement("span", { style: {
+      display: "inline-block",
+      fontFamily: SANS,
+      fontSize: 10.5,
+      letterSpacing: 1.5,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      color: t.fg,
+      background: t.bg,
+      border: `1px solid ${t.bd}`,
+      borderRadius: 20,
+      padding: "3px 10px",
+      whiteSpace: "nowrap"
+    } }, children);
+  }
+  function App() {
+    const [screen, setScreen] = useState("welcome");
+    const [loaded, setLoaded] = useState(false);
+    const [saved, setSaved] = useState(false);
+    const [milestone, setMilestone] = useState(null);
+    const [copied, setCopied] = useState(false);
+    const [tmp, setTmp] = useState({});
+    const saveT = useRef(null);
+    const pillT = useRef(null);
+    const seenMs = useRef({});
+    const [d, setD] = useState({
+      profile: { a: "", b: "", ageA: "", ageB: "" },
+      useMode: "",
+      story: {},
+      storyFive: "",
+      affection: { a: [], b: [] },
+      seen: { a: {}, b: {} },
+      comm: { a: {}, b: {} },
+      reach: { a: {}, b: {} },
+      conflict: { a: [], b: [] },
+      pause: {},
+      values: { a: [], b: [] },
+      valuesTop: { a: [], b: [] },
+      core: [],
+      money: {},
+      close: { a: {}, b: {} },
+      closeShared: "",
+      outside: { open: [], private: [] },
+      outsideNote: "",
+      balance: { a: {}, b: {} },
+      balanceNote: "",
+      phases: {},
+      future: {},
+      futureAreas: [],
+      rituals: [],
+      dateSeason: "fruehling",
+      dateDone: [],
+      promise: "",
+      letters: { a: "", b: "" },
+      letterDate: "",
+      visited: {}
+    });
+    useEffect(() => {
+      if (document.getElementById("wb-fonts")) return;
+      const l = document.createElement("link");
+      l.id = "wb-fonts";
+      l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap";
+      document.head.appendChild(l);
+    }, []);
+    useEffect(() => {
+      (async () => {
+        try {
+          const r = await store.get(STORAGE_KEY);
+          if (r && r.value) setD((p) => ({ ...p, ...JSON.parse(r.value) }));
+        } catch (e) {
+        }
+        setLoaded(true);
+      })();
+    }, []);
+    const persist = useCallback((next2) => {
+      if (saveT.current) clearTimeout(saveT.current);
+      saveT.current = setTimeout(async () => {
+        try {
+          await store.set(STORAGE_KEY, JSON.stringify(next2));
+          setSaved(true);
+          if (pillT.current) clearTimeout(pillT.current);
+          pillT.current = setTimeout(() => setSaved(false), 1400);
+        } catch (e) {
+          console.error("Speichern fehlgeschlagen", e);
+        }
+      }, 450);
+    }, []);
+    const up = useCallback((fn) => {
+      setD((prev2) => {
+        const next2 = typeof fn === "function" ? fn(prev2) : { ...prev2, ...fn };
+        persist(next2);
+        return next2;
+      });
+    }, [persist]);
+    const names = useMemo(() => ({
+      a: (d.profile.a || "").trim() || "Person A",
+      b: (d.profile.b || "").trim() || "Person B"
+    }), [d.profile.a, d.profile.b]);
+    const other = (k) => k === "a" ? names.b : names.a;
+    const chapterFilled = useCallback((id) => {
+      const has = (o) => o && Object.values(o).some((v) => typeof v === "string" ? v.trim() : (v || []).length);
+      switch (id) {
+        case 1:
+          return has(d.story) || !!d.storyFive.trim();
+        case 2:
+          return d.affection.a.length > 0 || d.affection.b.length > 0 || has(d.seen.a) || has(d.seen.b);
+        case 3:
+          return has(d.comm.a) || has(d.comm.b) || has(d.reach.a) || has(d.reach.b);
+        case 4:
+          return d.conflict.a.length > 0 || d.conflict.b.length > 0 || has(d.pause);
+        case 5:
+          return d.valuesTop.a.length > 0 || d.valuesTop.b.length > 0 || d.core.length > 0;
+        case 6:
+          return has(d.money);
+        case 7:
+          return has(d.close.a) || has(d.close.b) || !!d.closeShared.trim();
+        case 8:
+          return d.outside.open.length > 0 || d.outside.private.length > 0;
+        case 9:
+          return Object.keys(d.balance.a).length > 0 || Object.keys(d.balance.b).length > 0;
+        case 10:
+          return has(d.phases);
+        case 11:
+          return has(d.future) || d.futureAreas.length > 0;
+        case 12:
+          return d.rituals.length > 0 || d.dateDone.length > 0;
+        case 13:
+          return !!d.promise.trim();
+        case 14:
+          return !!d.letters.a.trim() || !!d.letters.b.trim();
+        default:
+          return false;
+      }
+    }, [d]);
+    const doneCount = CH.filter((c) => chapterFilled(c.id)).length;
+    const pct = Math.round(doneCount / CH.length * 100);
+    useEffect(() => {
+      if (!loaded) return;
+      const hit = [...MILESTONES].reverse().find((m) => pct >= m.at);
+      if (hit && !seenMs.current[hit.at]) {
+        seenMs.current[hit.at] = true;
+        if (pct > 0) setMilestone(hit);
+      }
+    }, [pct, loaded]);
+    const go = (s) => {
+      setScreen(s);
+      if (typeof s === "number") up((p) => ({ ...p, visited: { ...p.visited, [s]: true } }));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    const next = () => {
+      if (screen === "welcome") return go("toc");
+      if (screen === "toc") return go(1);
+      if (typeof screen === "number") return go(screen >= CH.length ? "ende" : screen + 1);
+    };
+    const prev = () => {
+      if (screen === "toc") return go("welcome");
+      if (screen === 1) return go("toc");
+      if (screen === "ende") return go(CH.length);
+      if (typeof screen === "number") return go(screen - 1);
+    };
+    const setIn = (path, key, val) => up((p) => ({ ...p, [path]: { ...p[path], [key]: val } }));
+    const setWho2 = (path, who2, key, val) => up((p) => ({
+      ...p,
+      [path]: { ...p[path], [who2]: { ...p[path][who2], [key]: val } }
+    }));
+    const toggleIn = (arr, val, max) => {
+      const has = arr.includes(val);
+      if (!has && max && arr.length >= max) return arr;
+      return has ? arr.filter((x) => x !== val) : [...arr, val];
+    };
+    const who = tmp.who || "a";
+    const setWho = (k) => setTmp((t) => ({ ...t, who: k }));
+    if (!loaded) {
+      return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", background: C.paper, display: "grid", placeItems: "center", padding: 24 } }, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SERIF, fontSize: 26, color: C.ink, margin: 0 } }, "Einen Moment …"));
+    }
+    const Welcome = () => {
+      const a = parseInt(d.profile.ageA, 10), b = parseInt(d.profile.ageB, 10);
+      const gap = !isNaN(a) && !isNaN(b) ? Math.abs(a - b) : null;
+      const mode = USE_MODES.find((m) => m.k === d.useMode);
+      return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: 34 } }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", style: { color: C.line, fontSize: 17, letterSpacing: 10, marginBottom: 22 } }, "✦ ✦ ✦"), /* @__PURE__ */ React.createElement("h1", { style: {
+        fontFamily: SERIF,
+        fontWeight: 500,
+        fontSize: "clamp(38px, 10vw, 62px)",
+        lineHeight: 1.04,
+        color: C.ink,
+        margin: "0 0 18px"
+      } }, "Liebe ohne", /* @__PURE__ */ React.createElement("br", null), "Altersgrenzen"), /* @__PURE__ */ React.createElement("p", { style: {
+        fontFamily: SANS,
+        fontSize: 15,
+        fontWeight: 300,
+        lineHeight: 1.6,
+        color: C.muted,
+        maxWidth: 400,
+        margin: "0 auto"
+      } }, "Das interaktive Beziehungsjournal für Paare, die sich bewusster verstehen und gemeinsam wachsen möchten.")), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, "Worum es hier geht"), /* @__PURE__ */ React.createElement(P, null, "Vierzehn Kapitel, in denen ihr euch Fragen stellt, die im Alltag meistens untergehen. Manche beantwortet jede:r für sich, andere gemeinsam. Am Ende entsteht daraus ein Manifest – eine Seite, auf der steht, was euch als Paar ausmacht."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Das hier ist kein Test. Es gibt keine Punktzahl und keine richtigen Antworten. Es gibt nur eure – und die sind der eigentliche Inhalt.")), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Wer seid ihr?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Tragt eure Namen ein. Dann spricht euch das Journal persönlich an statt von „Person A“ und „Person B“. Das Alter ist freiwillig."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, marginBottom: 14 } }, /* @__PURE__ */ React.createElement(
+        TextInput,
+        {
+          label: "Name",
+          flex: 2,
+          value: d.profile.a,
+          placeholder: "z. B. Alex",
+          onChange: (v) => setIn("profile", "a", v)
+        }
+      ), /* @__PURE__ */ React.createElement(
+        TextInput,
+        {
+          label: "Alter",
+          flex: 1,
+          numeric: true,
+          value: d.profile.ageA,
+          onChange: (v) => setIn("profile", "ageA", v)
+        }
+      )), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10 } }, /* @__PURE__ */ React.createElement(
+        TextInput,
+        {
+          label: "Name",
+          flex: 2,
+          value: d.profile.b,
+          placeholder: "z. B. Sam",
+          onChange: (v) => setIn("profile", "b", v)
+        }
+      ), /* @__PURE__ */ React.createElement(
+        TextInput,
+        {
+          label: "Alter",
+          flex: 1,
+          numeric: true,
+          value: d.profile.ageB,
+          onChange: (v) => setIn("profile", "ageB", v)
+        }
+      )), gap !== null && /* @__PURE__ */ React.createElement("p", { style: {
+        fontFamily: SANS,
+        fontSize: 14.5,
+        fontWeight: 300,
+        lineHeight: 1.6,
+        color: C.body,
+        marginTop: 18,
+        paddingTop: 16,
+        borderTop: `1px solid ${C.line}`
+      } }, gap === 0 ? "Ihr seid gleich alt. Auch dann sind Lebensphasen selten identisch – die Kapitel funktionieren genauso." : `Zwischen euch liegen ${gap} ${gap === 1 ? "Jahr" : "Jahre"}. Drei Kapitel gehen darauf besonders ein. Der Rest gilt für jedes Paar.`)), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Wie möchtet ihr das Journal nutzen?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Das ändert nichts an den Inhalten – es hilft nur, realistisch zu planen."), USE_MODES.map((m) => /* @__PURE__ */ React.createElement(
+        Choice,
+        {
+          key: m.k,
+          label: m.label,
+          note: m.note,
+          box: "radio",
+          selected: d.useMode === m.k,
+          onClick: () => up((p) => ({ ...p, useMode: p.useMode === m.k ? "" : m.k }))
+        }
+      )), mode && /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, lineHeight: 1.6, color: C.body, marginTop: 14, marginBottom: 0 } }, "Gute Wahl. ", mode.note)), /* @__PURE__ */ React.createElement(Card, { tone: "sage" }, /* @__PURE__ */ React.createElement(H3, null, "Bevor ihr anfangt"), [
+        "Niemand muss alles beantworten. Fragen, die als freiwillig gekennzeichnet sind, dürft ihr überspringen – und alle anderen auch.",
+        "Pausen sind ausdrücklich erlaubt. Alles speichert sich automatisch, ihr könnt jederzeit zurückkommen.",
+        "Was hier geteilt wird, wird nicht gegen die andere Person verwendet. Das ist die einzige Regel, die wirklich zählt."
+      ].map((t) => /* @__PURE__ */ React.createElement("div", { key: t, style: { display: "flex", gap: 12, marginBottom: 12 } }, /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: { color: C.sage, flexShrink: 0, marginTop: 2 } }, "—"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.65, color: C.body, margin: 0 } }, t)))), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginTop: 30, marginBottom: 26 } }, /* @__PURE__ */ React.createElement(Btn, { onClick: () => go("toc") }, "Weiter zur Übersicht ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 16 }))), /* @__PURE__ */ React.createElement(FinePrint, null));
+    };
+    const FinePrint = () => /* @__PURE__ */ React.createElement("div", { style: { borderTop: `1px solid ${C.line}`, paddingTop: 20, marginTop: 10 } }, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, lineHeight: 1.65, color: C.muted, margin: "0 0 10px" } }, /* @__PURE__ */ React.createElement(Lock, { size: 11, style: { verticalAlign: "-1px", marginRight: 6 }, "aria-hidden": "true" }), PRIVACY), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, lineHeight: 1.65, color: C.muted, margin: 0 } }, DISCLAIMER));
+    const Toc = () => /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: 30 } }, /* @__PURE__ */ React.createElement(Kicker, null, "Die Reise"), /* @__PURE__ */ React.createElement(H2, null, d.profile.a ? `${names.a} und ${names.b}` : "Vierzehn Kapitel"), /* @__PURE__ */ React.createElement("p", { style: {
+      fontFamily: SERIF,
+      fontSize: 20,
+      fontStyle: "italic",
+      lineHeight: 1.5,
+      color: C.body,
+      maxWidth: 460,
+      margin: "18px auto 0"
+    } }, "Ihr müsst nicht der Reihe nach vorgehen. Aber es lohnt sich.")), /* @__PURE__ */ React.createElement(ProgressBar, null), CH.map((c) => {
+      const done = chapterFilled(c.id);
+      return /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: c.id,
+          type: "button",
+          onClick: () => go(c.id),
+          style: {
+            display: "flex",
+            gap: 15,
+            alignItems: "flex-start",
+            width: "100%",
+            textAlign: "left",
+            background: C.sand,
+            border: "none",
+            borderRadius: 14,
+            cursor: "pointer",
+            padding: "18px 18px",
+            marginBottom: 9,
+            minHeight: 44
+          }
+        },
+        /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: {
+          fontFamily: SERIF,
+          fontSize: 21,
+          fontWeight: 500,
+          lineHeight: 1.15,
+          color: done ? C.terra : C.muted,
+          width: 24,
+          flexShrink: 0
+        } }, done ? "✓" : c.id),
+        /* @__PURE__ */ React.createElement("span", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("span", { style: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 5 } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 16, fontWeight: 500, color: C.ink } }, c.title), c.ageGap && /* @__PURE__ */ React.createElement(Pill, { tone: "gap" }, "Altersunterschied")), /* @__PURE__ */ React.createElement("span", { style: { display: "block", fontFamily: SANS, fontSize: 13.5, fontWeight: 300, lineHeight: 1.5, color: C.body, marginBottom: 6 } }, c.teaser), /* @__PURE__ */ React.createElement(Pill, { tone: c.mode === "gemeinsam" ? "duo" : "solo" }, c.mode)),
+        /* @__PURE__ */ React.createElement(ChevronRight, { size: 17, color: C.line, style: { flexShrink: 0, marginTop: 4 }, "aria-hidden": "true" })
+      );
+    }), /* @__PURE__ */ React.createElement(Card, { tone: "white", style: { marginTop: 22 } }, /* @__PURE__ */ React.createElement(H3, null, "Zwei Hinweise, die den Unterschied machen"), /* @__PURE__ */ React.createElement(P, null, "Fangt nicht an, wenn ihr müde seid oder gerade Streit hattet. Das klingt banal und entscheidet trotzdem darüber, ob die Antworten ehrlich oder ausweichend werden."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Und wenn eine Frage unangenehm ist, überspringt sie nicht sofort. Meistens ist genau die gemeint. Ihr dürft sie trotzdem liegen lassen und später zurückkommen.")), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginTop: 26, marginBottom: 26 } }, /* @__PURE__ */ React.createElement(Btn, { onClick: () => go(1) }, "Mit Kapitel 1 beginnen ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 16 }))), /* @__PURE__ */ React.createElement(FinePrint, null));
+    const ProgressBar = () => /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 26 } }, /* @__PURE__ */ React.createElement("div", { style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontFamily: SANS,
+      fontSize: 12,
+      letterSpacing: 1.2,
+      textTransform: "uppercase",
+      color: C.muted,
+      marginBottom: 8
+    } }, /* @__PURE__ */ React.createElement("span", null, doneCount, " von ", CH.length, " Kapiteln begonnen"), /* @__PURE__ */ React.createElement("span", null, pct, " %")), /* @__PURE__ */ React.createElement(
+      "div",
+      {
+        role: "progressbar",
+        "aria-valuenow": pct,
+        "aria-valuemin": 0,
+        "aria-valuemax": 100,
+        style: { height: 5, background: C.taupe, borderRadius: 4, overflow: "hidden" }
+      },
+      /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: `${pct}%`, background: C.terra, borderRadius: 4, transition: "width .35s" } })
+    ));
+    const Ch1 = () => {
+      const answered = Object.values(d.story).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Jedes Paar hat eine Version seiner Geschichte, die es Fremden erzählt. Kurz, rund, ein bisschen glattgeschliffen."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Und darunter liegt die andere: mit den Umwegen, den Zweifeln, dem Moment, in dem es auch hätte anders laufen können. Um die geht es hier.")), STORY_Q.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          placeholder: q.ph,
+          rows: 3,
+          value: d.story[q.k],
+          onChange: (v) => setIn("story", q.k, v)
+        }
+      )), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, "Unsere Geschichte in fünf Sätzen"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14 } }, "Jetzt zusammen. Einigt euch auf fünf Sätze, die eure Beziehung beschreiben – von damals bis heute. Es wird länger dauern, als ihr denkt, und genau das ist die Übung."), /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "",
+          rows: 7,
+          value: d.storyFive,
+          placeholder: "1. Wir haben uns … kennengelernt.\n2. Am Anfang war …\n3. Dann kam …\n4. Heute sind wir …\n5. Was uns ausmacht, ist …",
+          onChange: (v) => up((p) => ({ ...p, storyFive: v }))
+        }
+      )), answered >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Was euch dieses Kapitel gezeigt hat" }, /* @__PURE__ */ React.createElement(P, null, "Ihr habt ", answered, " von ", STORY_Q.length, " Fragen beantwortet. Wenn ihr sie zu zweit durchgegangen seid, ist euch vermutlich aufgefallen: An mindestens einer Stelle erinnert ihr euch unterschiedlich."), /* @__PURE__ */ React.createElement(P, null, "Das ist normal und kein Streitpunkt. Zwei Menschen erleben denselben Moment aus zwei Perspektiven – und die eigene Erinnerung fühlt sich immer wie die richtige an."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Interessanter als die Frage, wer recht hat, ist diese: Was sagt es über euch, dass jede:r sich ausgerechnet an ", /* @__PURE__ */ React.createElement("em", null, "diesen"), " Teil erinnert?")));
+    };
+    const Ch2 = () => {
+      const picks = d.affection[who] || [];
+      const bothPicked = d.affection.a.length === 2 && d.affection.b.length === 2;
+      const shared = bothPicked ? d.affection.a.filter((x) => d.affection.b.includes(x)) : [];
+      const lab = (k) => (AFFECTION.find((x) => x.k === k) || {}).label;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Eine Person räumt die Küche auf, weil sie liebt. Die andere hätte lieber gehört, dass sie großartig aussieht."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Beides ist Zuneigung. Nur in zwei verschiedenen Sprachen – und beide Seiten fühlen sich übersehen, obwohl beide geben.")), /* @__PURE__ */ React.createElement(
+        WhoTabs,
+        {
+          who,
+          setWho,
+          names,
+          counts: { a: `${d.affection.a.length}/2`, b: `${d.affection.b.length}/2` }
+        }
+      ), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Was kommt bei ", names[who], " am stärksten an?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Wählt genau zwei aus. Nicht die, die am nettesten klingen – die, bei denen ihr merkt: Ja, genau das fehlt mir, wenn es fehlt.", picks.length === 2 && " Noch einmal tippen, um die Auswahl zu ändern."), AFFECTION.map((af) => /* @__PURE__ */ React.createElement(
+        Choice,
+        {
+          key: af.k,
+          label: af.label,
+          note: af.desc,
+          selected: picks.includes(af.k),
+          disabled: picks.length >= 2 && !picks.includes(af.k),
+          onClick: () => up((p) => ({
+            ...p,
+            affection: { ...p.affection, [who]: toggleIn(p.affection[who], af.k, 2) }
+          }))
+        }
+      ))), picks.length > 0 && /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(Kicker, null, "Konkret heißt das für ", other(who)), picks.map((k) => {
+        const af = AFFECTION.find((x) => x.k === k);
+        return /* @__PURE__ */ React.createElement("div", { key: k, style: { marginBottom: 16 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 21, fontWeight: 500, color: C.ink, marginBottom: 6 } }, af.label), /* @__PURE__ */ React.createElement(P, { style: { marginBottom: 6 } }, af.give), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, color: C.muted, margin: 0 } }, af.miss));
+      })), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[2] }), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Sechs Fragen für ", names[who]), SEEN_Q.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          optional: q.optional,
+          rows: 2,
+          value: (d.seen[who] || {})[q.k],
+          onChange: (v) => setWho2("seen", who, q.k, v)
+        }
+      ))), bothPicked && /* @__PURE__ */ React.createElement(Result, { title: "Euer Vergleich" }, /* @__PURE__ */ React.createElement(P, null, names.a, " braucht vor allem ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.ink } }, d.affection.a.map(lab).join(" und ")), ".", " ", "Bei ", names.b, " sind es ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.ink } }, d.affection.b.map(lab).join(" und ")), "."), /* @__PURE__ */ React.createElement(P, null, shared.length === 2 ? "Ihr habt beide dasselbe gewählt. Das macht vieles leicht – ihr müsst weniger übersetzen. Achtet nur darauf, dass ihr die anderen drei Formen nicht ganz vergesst." : shared.length === 1 ? `Eine Überschneidung: ${lab(shared[0])}. Das ist euer gemeinsamer Nenner. Die jeweils andere Wahl ist der Punkt, an dem ihr aneinander vorbeigeben könnt, ohne es zu merken.` : "Ihr habt vier verschiedene Formen gewählt. Das ist überhaupt kein schlechtes Zeichen – es heißt nur, dass ihr bewusster übersetzen müsst. Was für die eine Seite selbstverständlich Liebe zeigt, kommt bei der anderen nicht automatisch an."), /* @__PURE__ */ React.createElement("div", { style: { background: C.sand, borderRadius: 12, padding: "16px 18px" } }, /* @__PURE__ */ React.createElement(Kicker, { color: C.ink }, "Für heute Abend"), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Sagt euch gegenseitig eine Sache, die die andere Person in der letzten Woche getan hat und die angekommen ist. Konkret, nicht allgemein. Das dauert zwei Minuten und wirkt länger als jedes Geschenk."))));
+    };
+    const Ch3 = () => {
+      const filledA = Object.values(d.reach.a || {}).filter((v) => (v || "").trim()).length;
+      const filledB = Object.values(d.reach.b || {}).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Die meisten Missverständnisse entstehen nicht, weil zu wenig geredet wird. Sondern weil beide davon ausgehen, dass die andere Person schon weiß, wie sie gemeint sind."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Dieses Kapitel ist im Grunde eine Gebrauchsanweisung – die ihr euch gegenseitig gebt.")), /* @__PURE__ */ React.createElement(WhoTabs, { who, setWho, names }), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Fünf Fragen für ", names[who]), COMM_Q.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          rows: 2,
+          value: (d.comm[who] || {})[q.k],
+          onChange: (v) => setWho2("comm", who, q.k, v)
+        }
+      ))), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[3] }), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, "So erreichst du mich besser"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 20 } }, "Vervollständigt die Sätze. Das Ergebnis ist der Teil dieses Journals, den ihr euch am ehesten gegenseitig zeigen solltet."), REACH_ME.map((r) => /* @__PURE__ */ React.createElement("div", { key: r.k, style: { marginBottom: 20 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 19, fontStyle: "italic", color: C.ink, marginBottom: 8, lineHeight: 1.4 } }, r.start), /* @__PURE__ */ React.createElement(
+        "textarea",
+        {
+          rows: 2,
+          value: (d.reach[who] || {})[r.k] || "",
+          placeholder: r.ph,
+          "aria-label": r.start,
+          onChange: (e) => setWho2("reach", who, r.k, e.target.value),
+          style: {
+            width: "100%",
+            boxSizing: "border-box",
+            resize: "vertical",
+            fontFamily: SANS,
+            fontSize: 15.5,
+            fontWeight: 300,
+            lineHeight: 1.6,
+            color: C.ink,
+            background: C.sand,
+            border: `1px solid ${C.line}`,
+            borderRadius: 10,
+            padding: "13px 15px",
+            outline: "none"
+          }
+        }
+      )))), (filledA >= 3 || filledB >= 3) && /* @__PURE__ */ React.createElement(Result, { title: "Was ihr jetzt damit macht" }, /* @__PURE__ */ React.createElement(P, null, names.a, " hat ", filledA, " Sätze ausgefüllt, ", names.b, " hat ", filledB, "."), /* @__PURE__ */ React.createElement(P, null, filledA >= 3 && filledB >= 3 ? "Lest euch die Sätze gegenseitig vor – nicht kommentieren, nur vorlesen und zuhören. Und dann fragt bei genau einem nach: „Was meinst du damit konkret?“" : "Sobald beide Seiten ausgefüllt sind, lest ihr sie euch gegenseitig vor. Nicht kommentieren, nur vorlesen und zuhören."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Der Satz über das, was euch verschließt, ist der wichtigste. Wenn ihr aus diesem Kapitel eine einzige Sache mitnehmt, dann diesen.")));
+    };
+    const Ch4 = () => {
+      const picks = d.conflict[who] || [];
+      const bothSet = d.conflict.a.length > 0 && d.conflict.b.length > 0;
+      const overlap = bothSet ? d.conflict.a.filter((x) => d.conflict.b.includes(x)) : [];
+      const lab = (k) => (CONFLICT.find((x) => x.k === k) || {}).label;
+      const pauseDone = Object.values(d.pause).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Fast jedes Paar streitet nach demselben Muster. Nicht über dasselbe Thema – nach demselben Ablauf."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Wer das Muster kennt, kann es unterbrechen. Wer es nicht kennt, hält es für den Charakter der anderen Person.")), /* @__PURE__ */ React.createElement(
+        WhoTabs,
+        {
+          who,
+          setWho,
+          names,
+          counts: { a: d.conflict.a.length, b: d.conflict.b.length }
+        }
+      ), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Was macht ", names[who], " im Streit?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Mehrfachauswahl. Die meisten kennen zwei oder drei dieser Reaktionen bei sich – je nachdem, worum es geht und wie müde sie sind."), CONFLICT.map((cf) => /* @__PURE__ */ React.createElement(
+        Choice,
+        {
+          key: cf.k,
+          label: cf.label,
+          selected: picks.includes(cf.k),
+          onClick: () => up((p) => ({
+            ...p,
+            conflict: { ...p.conflict, [who]: toggleIn(p.conflict[who], cf.k) }
+          }))
+        }
+      ))), picks.length > 0 && /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(Kicker, null, "Dazu jeweils drei Gedanken"), picks.map((k) => {
+        const cf = CONFLICT.find((x) => x.k === k);
+        return /* @__PURE__ */ React.createElement("div", { key: k, style: { marginBottom: 24, paddingBottom: 20, borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement(H3, { style: { marginBottom: 14 } }, cf.label), [["Mögliche Stärke", cf.strength], ["Mögliches Risiko", cf.risk], ["Hilfreicher nächster Schritt", cf.step]].map(([h, t]) => /* @__PURE__ */ React.createElement("div", { key: h, style: { marginBottom: 12 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12, fontWeight: 600, letterSpacing: 1.4, textTransform: "uppercase", color: C.muted, marginBottom: 5 } }, h), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, t))));
+      })), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[4] }), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Unsere Pause-Regel"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 20 } }, "Jetzt gemeinsam. Legt vorher fest, was gilt, wenn ein Gespräch kippt – im Streit selbst kann das niemand mehr verhandeln."), PAUSE_Q.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          placeholder: q.ph,
+          rows: 2,
+          value: d.pause[q.k],
+          onChange: (v) => setIn("pause", q.k, v)
+        }
+      ))), bothSet && /* @__PURE__ */ React.createElement(Result, { title: "Wie eure Muster zusammenspielen" }, /* @__PURE__ */ React.createElement(P, null, names.a, ": ", d.conflict.a.map(lab).join(", "), ".", /* @__PURE__ */ React.createElement("br", null), names.b, ": ", d.conflict.b.map(lab).join(", "), "."), /* @__PURE__ */ React.createElement(P, null, d.conflict.a.includes("rueckzug") && d.conflict.b.includes("angriff") || d.conflict.b.includes("rueckzug") && d.conflict.a.includes("angriff") ? "Eine Seite zieht sich zurück, die andere geht nach vorn. Das ist die häufigste Kombination überhaupt – und die, die sich am schnellsten aufschaukelt: Je mehr die eine nachsetzt, desto weiter geht die andere weg. Beide fühlen sich dabei im Recht. Der Ausweg ist nicht mehr Druck, sondern eure Pause-Regel." : overlap.length > 0 ? `Ihr teilt mindestens ein Muster: ${overlap.map(lab).join(", ")}. Das kann angenehm sein, weil ihr euch versteht – und schwierig, weil euch beiden dieselbe Fähigkeit fehlt. Wenn ihr beide einlenkt, wird nie etwas geklärt. Wenn ihr beide zurückzieht, redet irgendwann niemand mehr.` : "Eure Muster sind unterschiedlich, ohne direkt gegeneinander zu laufen. Das ist eine gute Ausgangslage. Wichtig bleibt: Sagt euch gegenseitig, was eure Reaktion bedeutet – von außen wird sie fast immer falsch gelesen."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, pauseDone >= 3 ? "Eure Pause-Regel steht. Schreibt euch den entscheidenden Satz irgendwo hin, wo ihr ihn im Ernstfall seht." : "Was jetzt noch fehlt, ist die Pause-Regel darüber. Die ist wichtiger als die Analyse – sie ist das Einzige aus diesem Kapitel, das im Streit tatsächlich hilft.")));
+    };
+    const Ch5 = () => {
+      const circled = d.values[who] || [];
+      const top = d.valuesTop[who] || [];
+      const bothTop = d.valuesTop.a.length === 5 && d.valuesTop.b.length === 5;
+      const shared = bothTop ? d.valuesTop.a.filter((x) => d.valuesTop.b.includes(x)) : [];
+      const pool = bothTop ? Array.from(/* @__PURE__ */ new Set([...d.valuesTop.a, ...d.valuesTop.b])) : [];
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Wofür würdet ihr euch streiten? Nicht wegen einer Kleinigkeit – sondern so, dass ihr auch unbequem werdet."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Was euch dazu einfällt, ist ein Wert. Und viele Paarkonflikte sind keine Meinungsverschiedenheiten, sondern zwei Werte, die gerade gegeneinanderstehen.")), /* @__PURE__ */ React.createElement(
+        WhoTabs,
+        {
+          who,
+          setWho,
+          names,
+          counts: { a: d.values.a.length, b: d.values.b.length }
+        }
+      ), /* @__PURE__ */ React.createElement(Card, { tone: "white", style: { padding: "28px 16px 24px" } }, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, lineHeight: 1.6, color: C.body, textAlign: "center", margin: "0 0 22px" } }, names[who], ": Kreis alles ein, was dir wichtig ist. Sei großzügig – fünfzehn bis fünfundzwanzig sind normal."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", justifyContent: "center", columnGap: 5, rowGap: 13 } }, VALUES.map((v, i) => {
+        const on = circled.includes(v);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: v,
+            type: "button",
+            "aria-pressed": on,
+            onClick: () => up((p) => {
+              const wasOn = p.values[who].includes(v);
+              return {
+                ...p,
+                values: { ...p.values, [who]: toggleIn(p.values[who], v) },
+                valuesTop: wasOn ? { ...p.valuesTop, [who]: (p.valuesTop[who] || []).filter((x) => x !== v) } : p.valuesTop
+              };
+            }),
+            style: {
+              position: "relative",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "9px 12px",
+              fontFamily: SERIF,
+              fontSize: 18.5,
+              fontWeight: on ? 600 : 400,
+              color: on ? C.ink : C.body,
+              lineHeight: 1.1
+            }
+          },
+          on && /* @__PURE__ */ React.createElement(
+            "svg",
+            {
+              viewBox: "0 0 100 100",
+              preserveAspectRatio: "none",
+              "aria-hidden": "true",
+              style: {
+                position: "absolute",
+                inset: "-4px -2px",
+                width: "calc(100% + 4px)",
+                height: "calc(100% + 8px)",
+                transform: `rotate(${[-2.5, 1.8, -1.2, 2.4][i % 4]}deg)`,
+                pointerEvents: "none"
+              }
+            },
+            /* @__PURE__ */ React.createElement(
+              "path",
+              {
+                d: SCRIBBLES[i % SCRIBBLES.length],
+                fill: "none",
+                stroke: C.terra,
+                strokeWidth: "2.2",
+                strokeLinecap: "round",
+                vectorEffect: "non-scaling-stroke"
+              }
+            )
+          ),
+          v
+        );
+      }))), circled.length > 0 && /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Jetzt runter auf fünf"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 16 } }, "Der unbequeme Teil. Tipp an, was übrig bleiben soll – nicht was gut klingt, sondern das, wofür du im Zweifel etwas anderes aufgeben würdest.", top.length < 5 && ` Noch ${5 - top.length} frei.`), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 } }, circled.map((v) => {
+        const on = top.includes(v);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: v,
+            type: "button",
+            "aria-pressed": on,
+            disabled: !on && top.length >= 5,
+            onClick: () => up((p) => ({
+              ...p,
+              valuesTop: { ...p.valuesTop, [who]: toggleIn(p.valuesTop[who], v, 5) }
+            })),
+            style: {
+              padding: "10px 16px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 24,
+              border: `1px solid ${on ? C.terra : C.line}`,
+              background: on ? C.terra : C.white,
+              color: on ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 14,
+              fontWeight: on ? 500 : 300,
+              opacity: !on && top.length >= 5 ? 0.45 : 1
+            }
+          },
+          v
+        );
+      }))), top.length === 5 && /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(Kicker, null, "Die fünf Werte von ", names[who]), top.map((v, i) => /* @__PURE__ */ React.createElement("div", { key: v, style: {
+        display: "flex",
+        gap: 14,
+        alignItems: "baseline",
+        padding: "11px 0",
+        borderBottom: i < 4 ? `1px solid ${C.line}` : "none"
+      } }, /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: { fontFamily: SERIF, fontSize: 19, fontWeight: 500, color: C.terra, width: 18 } }, i + 1), /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SERIF, fontSize: 24, fontWeight: 500, color: C.ink } }, v)))), bothTop && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Result, { title: "Wo ihr euch trefft" }, /* @__PURE__ */ React.createElement(P, null, shared.length >= 3 ? "Ihr habt viele Werte gemeinsam. Das erklärt, warum bei euch vieles ohne Absprache funktioniert – und heißt umgekehrt: Wenn es kracht, geht es fast nie ums Grundsätzliche, sondern um die Umsetzung." : shared.length >= 1 ? "Ein gemeinsamer Kern und deutliche Unterschiede. Das ist die häufigste Kombination bei Paaren – und eine sehr tragfähige, solange ihr die Unterschiede kennt und nicht für Sturheit haltet." : "In den Top fünf überschneidet sich nichts. Das ist kein Alarmzeichen. Sehr oft meint ihr dasselbe und nennt es anders. Geht die zehn Begriffe zusammen durch und lasst euch je erklären, was die andere Person darunter versteht."), shared.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 } }, shared.map((v) => /* @__PURE__ */ React.createElement("span", { key: v, style: {
+        fontFamily: SERIF,
+        fontSize: 19,
+        fontWeight: 500,
+        color: C.ink,
+        background: C.sand,
+        borderRadius: 24,
+        padding: "7px 16px"
+      } }, v))), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Eure Antworten unterscheiden sich an mehreren Stellen. Das ist kein Problem, sondern ein guter Gesprächseinstieg – meistens der beste in diesem ganzen Journal.")), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Eure drei Kernwerte"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 16 } }, "Jetzt gemeinsam: Wählt aus euren zehn Begriffen drei aus, die für eure Beziehung gelten sollen. Nicht für jede:n einzeln – für euch als Paar.", d.core.length < 3 && ` Noch ${3 - d.core.length} frei.`), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 } }, pool.map((v) => {
+        const on = d.core.includes(v);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: v,
+            type: "button",
+            "aria-pressed": on,
+            disabled: !on && d.core.length >= 3,
+            onClick: () => up((p) => ({ ...p, core: toggleIn(p.core, v, 3) })),
+            style: {
+              padding: "10px 16px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 24,
+              border: `1px solid ${on ? C.sage : C.line}`,
+              background: on ? C.sage : C.white,
+              color: on ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 14,
+              fontWeight: on ? 500 : 300,
+              opacity: !on && d.core.length >= 3 ? 0.45 : 1
+            }
+          },
+          v
+        );
+      })))), d.core.length === 3 && /* @__PURE__ */ React.createElement(Card, { tone: "sage", style: { textAlign: "center", padding: "34px 22px" } }, /* @__PURE__ */ React.createElement(Kicker, { color: C.sage }, "Euer Satz"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SERIF, fontSize: "clamp(23px, 5.6vw, 30px)", fontWeight: 500, lineHeight: 1.35, color: C.ink, margin: 0 } }, "Unsere Beziehung soll geprägt sein von ", d.core[0], ", ", d.core[1], " und ", d.core[2], ".")));
+    };
+    const Ch6 = () => {
+      const answered = Object.values(d.money).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Über Geld zu reden fühlt sich unromantisch an. Deshalb schieben es die meisten Paare so lange, bis eine Entscheidung ansteht, die keinen Aufschub duldet."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Hier geht es nicht um Zahlen. Es geht darum, wer bei euch worüber entscheidet – und ob sich das für beide richtig anfühlt.")), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(P, { style: { margin: 0, fontSize: 14.5 } }, "Beantwortet diese Fragen zusammen und schreibt eine gemeinsame Antwort. Wenn ihr euch bei einer Frage nicht einig werdet, schreibt beide Sichtweisen auf. Uneinigkeit festzuhalten ist wertvoller, als sie zu glätten.")), MONEY_Q.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          optional: q.optional,
+          rows: 3,
+          value: d.money[q.k],
+          onChange: (v) => setIn("money", q.k, v)
+        }
+      )), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[6] }), answered >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Worauf ihr achten könnt" }, /* @__PURE__ */ React.createElement(P, null, "Ihr habt ", answered, " von ", MONEY_Q.length, " Fragen bearbeitet."), /* @__PURE__ */ React.createElement(P, null, "Ein Muster, das bei vielen Paaren auftaucht: Wer mehr einbringt, entscheidet unbemerkt mehr mit. Nicht aus Absicht – es ergibt sich. Und wer weniger einbringt, sagt seltener etwas, weil es sich unpassend anfühlt."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Falls euch das bekannt vorkommt, ist das keine Schuldfrage. Es lässt sich mit einer einzigen Vereinbarung entschärfen: Ab einer bestimmten Summe entscheidet ihr grundsätzlich zu zweit – unabhängig davon, aus wessen Konto es kommt.")));
+    };
+    const Ch7 = () => {
+      const mine = d.close[who] || {};
+      const answered = Object.values(mine).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Nähe ist mehr als das Offensichtliche. Sie entsteht beim Kochen, im Auto, in dem Moment, in dem jemand merkt, dass etwas nicht stimmt, bevor es ausgesprochen wird."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Der erste Teil dieses Kapitels ist privat. Ihr müsst nichts davon zeigen.")), /* @__PURE__ */ React.createElement(Card, { tone: "sage" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 12, alignItems: "flex-start" } }, /* @__PURE__ */ React.createElement(Lock, { size: 17, color: C.sage, style: { flexShrink: 0, marginTop: 3 }, "aria-hidden": "true" }), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Nichts muss beantwortet oder geteilt werden, wenn es sich nicht sicher anfühlt. Der gemeinsame Teil weiter unten ist ausdrücklich freiwillig."))), /* @__PURE__ */ React.createElement(WhoTabs, { who, setWho, names }), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Für ", names[who], " allein"), CLOSE_PRIVATE.map((q) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: q.k,
+          label: q.q,
+          hint: q.hint,
+          optional: q.optional,
+          rows: 2,
+          value: mine[q.k],
+          onChange: (v) => setWho2("close", who, q.k, v)
+        }
+      ))), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[7] }), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" } }, /* @__PURE__ */ React.createElement(H3, { style: { margin: 0 } }, "Wenn ihr mögt: gemeinsam"), /* @__PURE__ */ React.createElement(Pill, { tone: "solo" }, "freiwillig")), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Fünf Fragen zum Vorlesen. Ihr müsst sie nicht der Reihe nach nehmen und keine davon beantworten."), CLOSE_TOGETHER.map((q, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: { display: "flex", gap: 12, padding: "12px 0", borderTop: i === 0 ? "none" : `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: { fontFamily: SERIF, fontSize: 17, color: C.terra, flexShrink: 0 } }, i + 1), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SERIF, fontSize: 19, fontStyle: "italic", lineHeight: 1.45, color: C.ink, margin: 0 } }, q))), /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "Wollt ihr etwas festhalten?",
+          optional: true,
+          rows: 3,
+          hint: "Nur wenn ihr möchtet. Ein Satz reicht.",
+          value: d.closeShared,
+          onChange: (v) => up((p) => ({ ...p, closeShared: v }))
+        }
+      )), answered >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Ein Gedanke zum Schluss" }, /* @__PURE__ */ React.createElement(P, null, "Was Nähe angeht, gibt es keinen Normalwert. Paare unterscheiden sich hier stärker als in fast allem anderen – und Vergleiche mit anderen führen zu nichts."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Was zählt, ist nur eins: Könnt ihr darüber reden, ohne dass sich jemand rechtfertigen muss? Wenn ja, ist der Rest lösbar. Wenn nein, ist genau das der eigentliche Punkt.")));
+    };
+    const Ch8 = () => {
+      const put = (bucket, topic) => up((p) => {
+        const openL = p.outside.open.filter((x) => x !== topic);
+        const privL = p.outside.private.filter((x) => x !== topic);
+        const already = p.outside[bucket].includes(topic);
+        if (already) return { ...p, outside: { open: openL, private: privL } };
+        return {
+          ...p,
+          outside: bucket === "open" ? { open: [...openL, topic], private: privL } : { open: openL, private: [...privL, topic] }
+        };
+      });
+      const sorted = d.outside.open.length + d.outside.private.length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Die Reaktionen von außen treffen selten beide gleich. Oft trägt eine Seite mehr davon, ohne es zu sagen."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Der Punkt ist nicht, Fremden etwas zu erklären. Der Punkt ist, dass ihr vorher wisst, was ihr teilt und was nicht.")), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Was gehört zu uns – und was gehört den anderen?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 20 } }, "Ordnet jedes Thema zu. Tippt auf einen der beiden Knöpfe; nochmal tippen hebt die Zuordnung wieder auf."), OUTSIDE_TOPICS.map((t) => {
+        const isOpen = d.outside.open.includes(t);
+        const isPriv = d.outside.private.includes(t);
+        return /* @__PURE__ */ React.createElement("div", { key: t, style: { padding: "14px 0", borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 400, lineHeight: 1.5, color: C.ink, margin: "0 0 10px" } }, t), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } }, /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            type: "button",
+            "aria-pressed": isOpen,
+            onClick: () => put("open", t),
+            style: {
+              flex: 1,
+              padding: "10px 8px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 10,
+              border: `1px solid ${isOpen ? C.sage : C.line}`,
+              background: isOpen ? C.sage : C.white,
+              color: isOpen ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 13,
+              fontWeight: isOpen ? 500 : 300
+            }
+          },
+          "Darüber sprechen wir offen"
+        ), /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            type: "button",
+            "aria-pressed": isPriv,
+            onClick: () => put("private", t),
+            style: {
+              flex: 1,
+              padding: "10px 8px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 10,
+              border: `1px solid ${isPriv ? C.terra : C.line}`,
+              background: isPriv ? C.terra : C.white,
+              color: isPriv ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 13,
+              fontWeight: isPriv ? 500 : 300
+            }
+          },
+          "Das bleibt privat"
+        )));
+      })), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, "Sätze für unangenehme Kommentare"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 20 } }, "Vier Tonlagen. Sucht euch pro Situation eine aus – und sprecht sie einmal laut aus, sonst fallen sie euch im Moment nicht ein."), REPLIES.map((r) => /* @__PURE__ */ React.createElement("div", { key: r.tone, style: { marginBottom: 20 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12, fontWeight: 600, letterSpacing: 1.4, textTransform: "uppercase", color: C.terra, marginBottom: 9 } }, r.tone), r.lines.map((line) => /* @__PURE__ */ React.createElement("div", { key: line, style: {
+        display: "flex",
+        gap: 11,
+        alignItems: "flex-start",
+        background: C.sand,
+        borderRadius: 10,
+        padding: "12px 14px",
+        marginBottom: 7
+      } }, /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: { color: C.line, fontFamily: SERIF, fontSize: 21, lineHeight: 1, marginTop: 2 } }, "„"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14.5, fontWeight: 300, lineHeight: 1.55, color: C.ink, margin: 0 } }, line))))), /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "Eigene Sätze, die zu euch passen",
+          optional: true,
+          rows: 3,
+          hint: "Am besten in eurer eigenen Sprache. Fremde Sätze bringt man selten über die Lippen.",
+          value: d.outsideNote,
+          onChange: (v) => up((p) => ({ ...p, outsideNote: v }))
+        }
+      )), sorted >= 4 && /* @__PURE__ */ React.createElement(Result, { title: "Eure Linie nach außen" }, /* @__PURE__ */ React.createElement(P, null, "Offen: ", d.outside.open.length, " ", d.outside.open.length === 1 ? "Thema" : "Themen", ". Privat: ", d.outside.private.length, ".", d.outside.private.length === 0 ? " Bisher ist nichts als privat markiert. Prüft das noch einmal – Paare ohne geschützten Bereich erklären sich auf Dauer sehr viel." : d.outside.open.length === 0 ? " Ihr schützt fast alles. Das ist völlig legitim. Achtet nur darauf, dass Verschlossenheit nach außen nicht auch zwischen euch entsteht." : " Diese Aufteilung ist eure Grenze. Sie funktioniert nur, wenn beide sie kennen und beide sie einhalten – auch dann, wenn jemand nachbohrt."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Ein Hinweis, der oft unterschätzt wird: Klärt auch, was in sozialen Netzwerken sichtbar sein darf. Diese Grenze verschiebt sich schneller als jede andere, und meistens merkt es nur eine Seite.")));
+    };
+    const Ch9 = () => {
+      const mine = d.balance[who] || {};
+      const answered = Object.keys(mine).length;
+      const bothDone = Object.keys(d.balance.a).length === BALANCE_AREAS.length && Object.keys(d.balance.b).length === BALANCE_AREAS.length;
+      const verdicts = bothDone ? BALANCE_AREAS.map((area) => {
+        const va = d.balance.a[area], vb = d.balance.b[area];
+        const bothBalanced = va === 2 && vb === 2;
+        const diff = Math.abs(va - vb);
+        return {
+          area,
+          kind: bothBalanced ? "gut" : diff >= 2 ? "unterschiedlich" : "gespraech"
+        };
+      }) : [];
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Balance heißt nicht, dass alles exakt gleich verteilt ist. In den meisten Paaren übernimmt jede Seite bestimmte Bereiche, und das ist gut so."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Die Frage ist eine andere: Fühlen sich beide Stimmen gleich wertvoll an? Wird gefragt, bevor entschieden wird?")), /* @__PURE__ */ React.createElement(
+        WhoTabs,
+        {
+          who,
+          setWho,
+          names,
+          counts: { a: `${Object.keys(d.balance.a).length}/9`, b: `${Object.keys(d.balance.b).length}/9` }
+        }
+      ), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Wer entscheidet bei euch?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 20 } }, names[who], ": Wie erlebst du die Entscheidungen in diesen Bereichen? Es geht um dein Erleben, nicht um eine objektive Wahrheit – die gibt es hier nicht."), BALANCE_AREAS.map((area) => /* @__PURE__ */ React.createElement("div", { key: area, style: { marginBottom: 22 } }, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 400, color: C.ink, margin: "0 0 9px" } }, area), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 6 } }, BALANCE_SCALE.map((sc) => {
+        const on = mine[area] === sc.v;
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: sc.v,
+            type: "button",
+            "aria-pressed": on,
+            onClick: () => setWho2("balance", who, area, sc.v),
+            style: {
+              flex: 1,
+              padding: "11px 4px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 9,
+              border: `1px solid ${on ? C.terra : C.line}`,
+              background: on ? C.terra : C.white,
+              color: on ? C.white : C.muted,
+              fontFamily: SANS,
+              fontSize: 11.5,
+              fontWeight: on ? 500 : 300,
+              lineHeight: 1.3
+            }
+          },
+          sc.label
+        );
+      }))))), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[9] }), bothDone && /* @__PURE__ */ React.createElement(Result, { title: "Wie ihr die Balance erlebt" }, /* @__PURE__ */ React.createElement(P, null, "Hier steht keine Punktzahl. Es geht nur darum, wo eure Wahrnehmungen zusammenpassen und wo nicht."), ["gut", "gespraech", "unterschiedlich"].map((kind) => {
+        const items = verdicts.filter((v) => v.kind === kind).map((v) => v.area);
+        if (items.length === 0) return null;
+        const head = kind === "gut" ? "Hier erlebt ihr bereits viel Balance" : kind === "gespraech" ? "Hier lohnt sich ein offenes Gespräch" : "Hier scheinen eure Wahrnehmungen unterschiedlich zu sein";
+        const note = kind === "gut" ? "Beide erleben diese Bereiche als ausgewogen. Das ist eine gute Grundlage." : kind === "gespraech" ? "Ihr liegt nah beieinander, aber nicht deckungsgleich. Ein kurzes Gespräch reicht hier meistens." : "Ihr erlebt dieselben Bereiche verschieden. Das ist der interessanteste Befund in diesem Kapitel – und kein Vorwurf an eine der beiden Seiten.";
+        const col = kind === "gut" ? C.sage : kind === "gespraech" ? C.muted : C.terra;
+        return /* @__PURE__ */ React.createElement("div", { key: kind, style: { marginBottom: 20 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12, fontWeight: 600, letterSpacing: 1.4, textTransform: "uppercase", color: col, marginBottom: 9 } }, head), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 9 } }, items.map((a) => /* @__PURE__ */ React.createElement("span", { key: a, style: {
+          fontFamily: SANS,
+          fontSize: 13.5,
+          fontWeight: 400,
+          color: C.ink,
+          background: C.sand,
+          borderRadius: 20,
+          padding: "6px 14px"
+        } }, a))), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, margin: 0 } }, note));
+      }), /* @__PURE__ */ React.createElement("div", { style: { background: C.sand, borderRadius: 12, padding: "16px 18px" } }, /* @__PURE__ */ React.createElement(Kicker, { color: C.ink }, "Leitfrage"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SERIF, fontSize: 21, fontStyle: "italic", lineHeight: 1.45, color: C.ink, margin: 0 } }, "Fühlen sich beide Stimmen in unserer Beziehung gleich wertvoll an?"))), answered > 0 && /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "Was möchtet ihr dazu festhalten?",
+          optional: true,
+          rows: 3,
+          hint: "Besonders zu den Bereichen, bei denen ihr unterschiedlich geantwortet habt.",
+          value: d.balanceNote,
+          onChange: (v) => up((p) => ({ ...p, balanceNote: v }))
+        }
+      ));
+    };
+    const Ch10 = () => {
+      const answered = Object.values(d.phases).filter((v) => (v || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Wenn zwei Menschen an unterschiedlichen Punkten im Leben stehen, laufen manche Zeitachsen nicht parallel. Das gilt bei großem Altersunterschied deutlicher – aber nicht nur dort."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Es geht hier nicht um Sorgen. Es geht um die Frage: Was besprechen wir heute, damit wir später bewusster entscheiden können?")), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(P, { style: { margin: 0, fontSize: 14.5 } }, "Nicht jedes Thema betrifft euch. Nehmt die drei oder vier, bei denen ihr merkt: Darüber haben wir eigentlich noch nie richtig geredet. Die anderen dürft ihr leer lassen.")), PHASE_TOPICS.map((t) => /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          key: t.k,
+          label: t.label,
+          hint: t.q,
+          optional: true,
+          rows: 3,
+          value: d.phases[t.k],
+          onChange: (v) => setIn("phases", t.k, v)
+        }
+      )), answered >= 2 && /* @__PURE__ */ React.createElement(Result, { title: "Was ihr daraus mitnehmt" }, /* @__PURE__ */ React.createElement(P, null, "Ihr habt ", answered, " ", answered === 1 ? "Thema" : "Themen", " bearbeitet. Schaut euch an, welches davon am wenigsten konkret geworden ist – das ist meistens das, vor dem beide ein bisschen ausweichen."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Und macht daraus einen Termin statt eines Vorsatzes. „Wir müssten mal“ hat noch kein Paar weitergebracht. Ein Datum im Kalender schon.")));
+    };
+    const Ch11 = () => {
+      const hz = tmp.hz || "jahr";
+      const setHz = (k) => setTmp((t) => ({ ...t, hz: k }));
+      const cur = HORIZONS.find((h) => h.k === hz);
+      const filled = HORIZONS.filter((h) => (d.future[h.k] || "").trim()).length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Träume, die niemand ausspricht, bleiben Träume. Träume, die irgendwo stehen, werden mit der Zeit zu Plänen."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Vier Zeitpunkte, einer nach dem anderen. Nicht alles auf einmal – das überfordert nur.")), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Welche Bereiche sind euch wichtig?"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 16 } }, "Wählt drei bis fünf aus. Das hilft, beim Schreiben nicht ins Allgemeine abzurutschen."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 } }, FUTURE_AREAS.map((a) => {
+        const on = d.futureAreas.includes(a);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: a,
+            type: "button",
+            "aria-pressed": on,
+            onClick: () => up((p) => ({ ...p, futureAreas: toggleIn(p.futureAreas, a) })),
+            style: {
+              padding: "10px 16px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 24,
+              border: `1px solid ${on ? C.sage : C.line}`,
+              background: on ? C.sage : C.white,
+              color: on ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 13.5,
+              fontWeight: on ? 500 : 300
+            }
+          },
+          a
+        );
+      }))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 5, marginBottom: 20, overflowX: "auto", paddingBottom: 4 } }, HORIZONS.map((h, i) => {
+        const on = hz === h.k;
+        const has = (d.future[h.k] || "").trim();
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: h.k,
+            type: "button",
+            "aria-pressed": on,
+            onClick: () => setHz(h.k),
+            style: {
+              flex: "1 0 auto",
+              padding: "12px 14px",
+              minHeight: 44,
+              cursor: "pointer",
+              borderRadius: 12,
+              border: `1px solid ${on ? C.terra : C.line}`,
+              background: on ? C.terra : C.white,
+              color: on ? C.white : C.body,
+              fontFamily: SANS,
+              fontSize: 12.5,
+              fontWeight: on ? 500 : 300,
+              whiteSpace: "nowrap"
+            }
+          },
+          has && !on && /* @__PURE__ */ React.createElement("span", { "aria-hidden": "true", style: { color: C.terra, marginRight: 6 } }, "•"),
+          h.label
+        );
+      })), /* @__PURE__ */ React.createElement(Card, { tone: "white", style: { position: "relative" } }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 18
+      } }, HORIZONS.map((h, i) => /* @__PURE__ */ React.createElement(React.Fragment, { key: h.k }, /* @__PURE__ */ React.createElement("span", { style: {
+        width: hz === h.k ? 13 : 9,
+        height: hz === h.k ? 13 : 9,
+        borderRadius: "50%",
+        background: (d.future[h.k] || "").trim() ? C.terra : C.taupe,
+        border: hz === h.k ? `2px solid ${C.terra}` : "none",
+        flexShrink: 0
+      } }), i < HORIZONS.length - 1 && /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 1, background: C.line } })))), /* @__PURE__ */ React.createElement(H3, null, cur.label), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 16 } }, cur.note), /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "",
+          rows: 6,
+          placeholder: d.futureAreas.length > 0 ? `Denkt an: ${d.futureAreas.join(", ")}` : "Wie sieht euer Leben aus? Wo wohnt ihr, was macht ihr, wie geht es euch?",
+          value: d.future[hz],
+          onChange: (v) => setIn("future", hz, v)
+        }
+      ), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", justifyContent: "space-between", gap: 10 } }, /* @__PURE__ */ React.createElement(Btn, { small: true, variant: "quiet", onClick: () => {
+        const i = HORIZONS.findIndex((h) => h.k === hz);
+        if (i > 0) setHz(HORIZONS[i - 1].k);
+      } }, /* @__PURE__ */ React.createElement(ChevronLeft, { size: 14 }), " Vorher"), /* @__PURE__ */ React.createElement(Btn, { small: true, variant: "ghost", onClick: () => {
+        const i = HORIZONS.findIndex((h) => h.k === hz);
+        if (i < HORIZONS.length - 1) setHz(HORIZONS[i + 1].k);
+      } }, "Später ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 14 })))), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[11] }), filled >= 2 && /* @__PURE__ */ React.createElement(Result, { title: "Eure Zeitachse" }, /* @__PURE__ */ React.createElement(P, null, "Ihr habt ", filled, " von vier Zeitpunkten beschrieben."), /* @__PURE__ */ React.createElement(P, null, !(d.future.jahr || "").trim() ? "Auffällig: Für das nächste Jahr steht noch nichts. Genau das ist aber der einzige Zeitraum, in dem ihr heute schon etwas tun könnt. Nehmt euch einen Punkt aus einem der späteren Felder und fragt euch, welche kleine Version davon in zwölf Monaten möglich wäre." : !(d.future.spaeter || "").trim() ? "Was noch fehlt, ist der letzte Zeitpunkt. Über „später im Leben“ sprechen die wenigsten Paare – und gerade bei unterschiedlichen Lebensphasen ist es das Feld, das am meisten Klarheit bringt." : "Ihr habt über alle Zeiträume nachgedacht, auch über den letzten. Das machen die wenigsten. Lest die vier Texte einmal hintereinander – daran seht ihr, ob eure Richtungen zusammenpassen."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Nehmt euch aus dem ersten Feld eine einzige Sache mit ins Manifest. Der Rest darf offen bleiben.")));
+    };
+    const Ch12 = () => {
+      const season = SEASONS.find((s) => s.k === d.dateSeason) || SEASONS[0];
+      const ideas = SEASON_DATES[season.k];
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Beziehungen verändern sich nicht durch große Vorsätze, sondern durch das, was regelmäßig passiert."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Zwei Listen: kleine Rituale für den Alltag und Ideen für die Abende, an denen ihr euch wirklich verabredet.")), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(H3, null, "Unsere Rituale"), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Wählt höchstens drei aus. Mehr schafft im Alltag niemand, und drei eingehaltene sind mehr wert als acht guten Willens."), RITUAL_IDEAS.map((r) => /* @__PURE__ */ React.createElement(
+        Choice,
+        {
+          key: r,
+          label: r,
+          selected: d.rituals.includes(r),
+          onClick: () => up((p) => ({ ...p, rituals: toggleIn(p.rituals, r) }))
+        }
+      ))), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, "Date-Ideen nach Jahreszeit"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", background: C.taupe, borderRadius: 40, padding: 4, marginBottom: 20 } }, SEASONS.map((s) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: s.k,
+          type: "button",
+          "aria-pressed": d.dateSeason === s.k,
+          onClick: () => up((p) => ({ ...p, dateSeason: s.k })),
+          style: {
+            flex: 1,
+            padding: "11px 4px",
+            minHeight: 44,
+            cursor: "pointer",
+            border: "none",
+            borderRadius: 40,
+            background: d.dateSeason === s.k ? C.terra : "transparent",
+            color: d.dateSeason === s.k ? C.white : C.body,
+            fontFamily: SANS,
+            fontSize: 13,
+            fontWeight: 500
+          }
+        },
+        s.label
+      ))), ideas.map((idea) => {
+        const key = `${season.k}|${idea}`;
+        const done = d.dateDone.includes(key);
+        return /* @__PURE__ */ React.createElement("div", { key, style: { display: "flex", gap: 12, alignItems: "flex-start", padding: "13px 0", borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            type: "button",
+            "aria-pressed": done,
+            "aria-label": `${idea} als erledigt markieren`,
+            onClick: () => up((p) => ({ ...p, dateDone: toggleIn(p.dateDone, key) })),
+            style: {
+              width: 22,
+              height: 22,
+              minWidth: 22,
+              marginTop: 1,
+              borderRadius: 6,
+              cursor: "pointer",
+              border: `1px solid ${done ? C.terra : C.line}`,
+              background: done ? C.terra : C.white,
+              display: "grid",
+              placeItems: "center",
+              padding: 0
+            }
+          },
+          done && /* @__PURE__ */ React.createElement(Check, { size: 12, color: C.white })
+        ), /* @__PURE__ */ React.createElement("p", { style: {
+          fontFamily: SANS,
+          fontSize: 15,
+          fontWeight: 300,
+          lineHeight: 1.5,
+          margin: 0,
+          color: done ? C.muted : C.body,
+          textDecoration: done ? "line-through" : "none"
+        } }, idea));
+      })), /* @__PURE__ */ React.createElement(Impulse, { text: IMPULSES[12] }), (d.rituals.length > 0 || d.dateDone.length > 0) && /* @__PURE__ */ React.createElement(Result, { title: "Euer Alltag" }, /* @__PURE__ */ React.createElement(P, null, d.rituals.length > 0 && `${d.rituals.length} ${d.rituals.length === 1 ? "Ritual" : "Rituale"} ausgewählt. `, d.dateDone.length > 0 && `${d.dateDone.length} ${d.dateDone.length === 1 ? "Idee" : "Ideen"} bereits abgehakt.`), /* @__PURE__ */ React.createElement(P, null, d.rituals.length > 3 ? "Das sind mehr als drei. Erfahrungsgemäß überlebt davon höchstens die Hälfte den ersten stressigen Monat. Streicht bewusst, statt es später schleifen zu lassen." : d.rituals.length > 0 ? "Eine gute Zahl. Legt jetzt noch fest, wer im Zweifel daran erinnert – Rituale ohne Zuständigkeit schlafen leise ein." : "Noch kein Ritual ausgewählt. Nehmt eins, das weniger als fünf Minuten kostet. Genau die halten am längsten."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Und tragt eine der Date-Ideen diese Woche in den Kalender ein. Eine Liste, aus der nie etwas wird, ist nur eine weitere Liste.")));
+    };
+    const manifestText = useMemo(() => {
+      const L = [];
+      L.push("UNSER BEZIEHUNGSMANIFEST");
+      L.push(`${names.a} und ${names.b}`);
+      L.push("");
+      if (d.core.length === 3) {
+        L.push("UNSERE DREI WERTE");
+        L.push(`Unsere Beziehung soll geprägt sein von ${d.core[0]}, ${d.core[1]} und ${d.core[2]}.`);
+        L.push("");
+      }
+      const admireA = (d.seen.a || {}).bewundere, admireB = (d.seen.b || {}).bewundere;
+      if ((admireA || "").trim() || (admireB || "").trim()) {
+        L.push("WAS WIR ANEINANDER SCHÄTZEN");
+        if ((admireA || "").trim()) L.push(`${names.a}: ${admireA.trim()}`);
+        if ((admireB || "").trim()) L.push(`${names.b}: ${admireB.trim()}`);
+        L.push("");
+      }
+      const pauseBits = [d.pause.erkennen, d.pause.dauer, d.pause.zusage, d.pause.zurueck].filter((x) => (x || "").trim());
+      if (pauseBits.length) {
+        L.push("WIE WIR KONFLIKTE FÜHREN");
+        pauseBits.forEach((b) => L.push(`— ${b.trim()}`));
+        L.push("");
+      }
+      if (d.outside.private.length) {
+        L.push("WAS WIR NACH AUSSEN SCHÜTZEN");
+        L.push(d.outside.private.join(" · "));
+        L.push("");
+      }
+      if ((d.future.jahr || "").trim()) {
+        L.push("WAS WIR GEMEINSAM AUFBAUEN");
+        L.push(d.future.jahr.trim());
+        L.push("");
+      }
+      if (d.rituals.length) {
+        L.push("UNSERE RITUALE");
+        d.rituals.forEach((r) => L.push(`— ${r}`));
+        L.push("");
+      }
+      if ((d.promise || "").trim()) {
+        L.push("UNSER VERSPRECHEN");
+        L.push(d.promise.trim());
+        L.push("");
+      }
+      L.push((/* @__PURE__ */ new Date()).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" }));
+      return L.join("\n");
+    }, [d, names]);
+    const Ch13 = () => {
+      const blocks = [
+        { h: "Unsere drei Werte", body: d.core.length === 3 ? `Unsere Beziehung soll geprägt sein von ${d.core[0]}, ${d.core[1]} und ${d.core[2]}.` : null, from: "Kapitel 5", to: 5 },
+        { h: "Was wir aneinander schätzen", body: [(d.seen.a || {}).bewundere, (d.seen.b || {}).bewundere].filter((x) => (x || "").trim()).join("\n"), from: "Kapitel 2", to: 2 },
+        { h: "Wie wir Konflikte führen", body: [d.pause.erkennen, d.pause.dauer, d.pause.zusage, d.pause.zurueck].filter((x) => (x || "").trim()).join("\n"), from: "Kapitel 4", to: 4 },
+        { h: "Was wir nach außen schützen", body: d.outside.private.length ? d.outside.private.join(" · ") : null, from: "Kapitel 8", to: 8 },
+        { h: "Was wir gemeinsam aufbauen", body: (d.future.jahr || "").trim() || null, from: "Kapitel 11", to: 11 },
+        { h: "Unsere Rituale", body: d.rituals.length ? d.rituals.join("\n") : null, from: "Kapitel 12", to: 12 }
+      ];
+      const ready = blocks.filter((b) => b.body).length;
+      const doCopy = async () => {
+        try {
+          await navigator.clipboard.writeText(manifestText);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1800);
+        } catch (e) {
+          setTmp((t) => ({ ...t, copyFail: true }));
+        }
+      };
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Dieses Kapitel schreibt sich fast von selbst. Alles, was hier steht, habt ihr in den Kapiteln davor schon beantwortet."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Was fehlt, ist nur noch ein Satz – und der ist der schwerste.")), /* @__PURE__ */ React.createElement("div", { id: "manifest", style: {
+        background: C.white,
+        borderRadius: 16,
+        padding: "34px 24px 30px",
+        marginBottom: 20,
+        border: `1px solid ${C.line}`
+      } }, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: 26, paddingBottom: 22, borderBottom: `1px solid ${C.line}` } }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", style: { color: C.line, fontSize: 14, letterSpacing: 8, marginBottom: 12 } }, "✦ ✦ ✦"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 11.5, letterSpacing: 3, fontWeight: 600, textTransform: "uppercase", color: C.muted, margin: "0 0 8px" } }, "Unser Beziehungsmanifest"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: HAND, fontSize: 34, fontWeight: 600, color: C.ink, margin: 0, lineHeight: 1.15 } }, names.a, " & ", names.b)), blocks.map((b) => /* @__PURE__ */ React.createElement("div", { key: b.h, style: { marginBottom: 22 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 11.5, fontWeight: 600, letterSpacing: 1.6, textTransform: "uppercase", color: C.terra, marginBottom: 8 } }, b.h), b.body ? b.body.split("\n").map((line, i) => /* @__PURE__ */ React.createElement("p", { key: i, style: { fontFamily: SERIF, fontSize: 19, lineHeight: 1.5, color: C.ink, margin: "0 0 6px" } }, line)) : /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          type: "button",
+          onClick: () => go(b.to),
+          className: "no-print",
+          style: {
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+            textAlign: "left",
+            fontFamily: SANS,
+            fontSize: 14,
+            fontWeight: 300,
+            fontStyle: "italic",
+            color: C.muted,
+            textDecoration: "underline",
+            minHeight: 44
+          }
+        },
+        "Noch offen – in ",
+        b.from,
+        " ergänzen"
+      ))), /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 8 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 11.5, fontWeight: 600, letterSpacing: 1.6, textTransform: "uppercase", color: C.terra, marginBottom: 8 } }, "Unser Versprechen"), (d.promise || "").trim() ? /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SERIF, fontSize: 21, fontStyle: "italic", lineHeight: 1.5, color: C.ink, margin: 0 } }, d.promise) : /* @__PURE__ */ React.createElement("p", { className: "no-print", style: { fontFamily: SANS, fontSize: 14, fontStyle: "italic", color: C.muted, margin: 0 } }, "Steht noch aus – gleich unten."))), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(
+        Field,
+        {
+          label: "Ein Versprechen, das wir uns geben",
+          hint: "Ein Satz. Nicht groß, sondern einhaltbar. Ein Versprechen, das ihr nur an guten Tagen halten könnt, ist keins.",
+          placeholder: "Zum Beispiel: Wir gehen nicht schlafen, ohne einander gesagt zu haben, woran wir gerade sind.",
+          rows: 3,
+          value: d.promise,
+          onChange: (v) => up((p) => ({ ...p, promise: v }))
+        }
+      ), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, flexWrap: "wrap" } }, /* @__PURE__ */ React.createElement(Btn, { small: true, onClick: doCopy }, copied ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Check, { size: 14 }), " Kopiert") : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Copy, { size: 14 }), " Text kopieren")), /* @__PURE__ */ React.createElement(Btn, { small: true, variant: "ghost", onClick: () => window.print() }, /* @__PURE__ */ React.createElement(Printer, { size: 14 }), " Drucken oder als PDF")), tmp.copyFail && /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 13, color: C.muted, marginTop: 12, marginBottom: 0 } }, "Das Kopieren hat dein Browser blockiert. Nutz stattdessen „Drucken oder als PDF“.")), ready >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Was ihr jetzt damit macht" }, /* @__PURE__ */ React.createElement(P, null, ready, " von sechs Abschnitten sind gefüllt. Die offenen Punkte könnt ihr jederzeit nachtragen – sie erscheinen hier automatisch."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, "Druckt es aus und hängt es irgendwo hin, wo ihr es seht. Nicht als Dekoration, sondern als Erinnerung: An dem Tag, an dem ihr das geschrieben habt, wart ihr euch über all das einig.")));
+    };
+    const Ch14 = () => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Lead, null, /* @__PURE__ */ React.createElement(React.Fragment, null, "Am Anfang entscheidet man sich einmal füreinander. Danach entscheidet man sich jeden Tag wieder – nur sagt es niemand mehr laut."), /* @__PURE__ */ React.createElement(React.Fragment, null, "Dieses letzte Kapitel ist genau dafür da.")), /* @__PURE__ */ React.createElement(WhoTabs, { who, setWho, names }), /* @__PURE__ */ React.createElement(Card, { tone: "white" }, /* @__PURE__ */ React.createElement(H3, null, names[who], " schreibt an ", other(who)), /* @__PURE__ */ React.createElement(P, { style: { fontSize: 14, marginBottom: 18 } }, "Warum ich mich heute wieder für dich entscheide. Kein perfekter Text – lieber ein ehrlicher. Schreibt so, wie ihr redet."), /* @__PURE__ */ React.createElement(
+      "textarea",
+      {
+        rows: 12,
+        value: d.letters[who] || "",
+        "aria-label": `Brief von ${names[who]} an ${other(who)}`,
+        placeholder: `Liebe:r ${other(who)}, …`,
+        onChange: (e) => setIn("letters", who, e.target.value),
+        style: {
+          width: "100%",
+          boxSizing: "border-box",
+          resize: "vertical",
+          fontFamily: SERIF,
+          fontSize: 19,
+          fontWeight: 400,
+          lineHeight: 1.7,
+          color: C.ink,
+          background: C.sand,
+          border: `1px solid ${C.line}`,
+          borderRadius: 12,
+          padding: "20px 20px",
+          outline: "none"
+        }
+      }
+    )), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement(
+      Field,
+      {
+        label: "Wann wollt ihr diese Briefe wieder lesen?",
+        optional: true,
+        rows: 1,
+        hint: "Ein Datum reicht. Tragt es euch gleich in den Kalender ein – sonst passiert es nicht.",
+        placeholder: "Zum Beispiel: an unserem Jahrestag",
+        value: d.letterDate,
+        onChange: (v) => up((p) => ({ ...p, letterDate: v }))
+      }
+    )), (d.letters.a || "").trim() && (d.letters.b || "").trim() && /* @__PURE__ */ React.createElement(Result, { title: "Beide Briefe sind geschrieben" }, /* @__PURE__ */ React.createElement(P, null, "Lest sie euch nicht selbst durch. Lest sie euch gegenseitig vor – laut, und ohne zwischendurch zu kommentieren."), /* @__PURE__ */ React.createElement(P, { style: { margin: 0 } }, (d.letterDate || "").trim() ? `Und dann kommt wieder, wenn es so weit ist: ${d.letterDate.trim()}.` : "Und setzt euch ein Datum, an dem ihr sie erneut lest. In einem Jahr klingen diese Zeilen völlig anders.")));
+    const Ende = () => /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", paddingTop: 20 } }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", style: { color: C.line, fontSize: 17, letterSpacing: 10, marginBottom: 24 } }, "✦ ✦ ✦"), /* @__PURE__ */ React.createElement(H2, null, "Das war die Reise"), /* @__PURE__ */ React.createElement("p", { style: {
+      fontFamily: SERIF,
+      fontSize: "clamp(20px, 4.8vw, 25px)",
+      fontStyle: "italic",
+      lineHeight: 1.55,
+      color: C.ink,
+      maxWidth: 480,
+      margin: "26px auto 30px"
+    } }, "Nicht der Altersunterschied entscheidet über die Qualität einer Beziehung. Entscheidend ist, wie zwei Menschen einander sehen, respektieren und gemeinsam wachsen."), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15.5, fontWeight: 300, lineHeight: 1.7, color: C.body, maxWidth: 470, margin: "0 auto 34px" } }, "Alles bleibt gespeichert. Kommt in ein paar Monaten zurück, lest euer Manifest und schaut, was inzwischen anders ist. Genau dafür ist dieses Journal gemacht."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 } }, /* @__PURE__ */ React.createElement(Btn, { onClick: () => go(13) }, "Zum Manifest"), /* @__PURE__ */ React.createElement(Btn, { variant: "ghost", onClick: () => go("toc") }, "Zur Übersicht")), /* @__PURE__ */ React.createElement("div", { style: { borderTop: `1px solid ${C.line}`, paddingTop: 24, marginBottom: 26 } }, /* @__PURE__ */ React.createElement("button", { type: "button", onClick: async () => {
+      if (!window.confirm("Wirklich alle Antworten löschen? Das lässt sich nicht rückgängig machen.")) return;
+      if (!window.confirm("Letzte Sicherheitsfrage: Alle vierzehn Kapitel werden geleert. Fortfahren?")) return;
+      try {
+        await store.del(STORAGE_KEY);
+      } catch (e) {
+      }
+      window.location.reload();
+    }, style: {
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      minHeight: 44,
+      fontFamily: SANS,
+      fontSize: 13,
+      color: C.muted,
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 8
+    } }, /* @__PURE__ */ React.createElement(RotateCcw, { size: 13, "aria-hidden": "true" }), " Alle Antworten zurücksetzen")), /* @__PURE__ */ React.createElement(FinePrint, null));
+    const SCREENS = {
+      1: Ch1,
+      2: Ch2,
+      3: Ch3,
+      4: Ch4,
+      5: Ch5,
+      6: Ch6,
+      7: Ch7,
+      8: Ch8,
+      9: Ch9,
+      10: Ch10,
+      11: Ch11,
+      12: Ch12,
+      13: Ch13,
+      14: Ch14
+    };
+    const meta = typeof screen === "number" ? CH.find((c) => c.id === screen) : null;
+    const Body = screen === "welcome" ? Welcome : screen === "toc" ? Toc : screen === "ende" ? Ende : SCREENS[screen];
+    return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", background: C.paper, paddingBottom: 96 } }, typeof screen === "number" && /* @__PURE__ */ React.createElement("header", { className: "no-print", style: {
+      position: "sticky",
+      top: 0,
+      zIndex: 20,
+      background: C.paper,
+      borderBottom: `1px solid ${C.line}`,
+      padding: "10px 16px 12px"
+    } }, /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 680, margin: "0 auto" } }, /* @__PURE__ */ React.createElement("nav", { "aria-label": "Kapitel", style: { display: "flex", gap: 4, overflowX: "auto", paddingBottom: 6 } }, CH.map((c) => /* @__PURE__ */ React.createElement(
+      "button",
+      {
+        key: c.id,
+        type: "button",
+        onClick: () => go(c.id),
+        "aria-label": `Kapitel ${c.id}: ${c.title}`,
+        "aria-current": screen === c.id ? "step" : void 0,
+        style: {
+          flexShrink: 0,
+          minWidth: 30,
+          height: 30,
+          borderRadius: 8,
+          cursor: "pointer",
+          border: `1px solid ${screen === c.id ? C.terra : "transparent"}`,
+          background: screen === c.id ? C.terra : chapterFilled(c.id) ? C.taupe : "transparent",
+          color: screen === c.id ? C.white : C.muted,
+          fontFamily: SANS,
+          fontSize: 12,
+          fontWeight: 500,
+          padding: 0
+        }
+      },
+      c.id
+    ))), /* @__PURE__ */ React.createElement("div", { style: { height: 3, background: C.taupe, borderRadius: 3, overflow: "hidden" } }, /* @__PURE__ */ React.createElement("div", { style: { height: "100%", width: `${pct}%`, background: C.terra, transition: "width .35s" } })))), /* @__PURE__ */ React.createElement("main", { style: { maxWidth: 680, margin: "0 auto", padding: "32px 18px 0" } }, meta && /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 14 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: 9, marginBottom: 14 } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 12, letterSpacing: 2.6, fontWeight: 600, textTransform: "uppercase", color: C.terra } }, "Kapitel ", meta.id), /* @__PURE__ */ React.createElement(Pill, { tone: meta.mode === "gemeinsam" ? "duo" : "solo" }, meta.mode), meta.ageGap && /* @__PURE__ */ React.createElement(Pill, { tone: "gap" }, "Altersunterschied")), /* @__PURE__ */ React.createElement(H2, null, meta.title)), /* @__PURE__ */ React.createElement(Body, null)), screen !== "welcome" && /* @__PURE__ */ React.createElement("nav", { className: "no-print", "aria-label": "Seitennavigation", style: {
+      maxWidth: 680,
+      margin: "36px auto 0",
+      padding: "22px 18px 0",
+      borderTop: `1px solid ${C.line}`,
+      display: "flex",
+      justifyContent: "space-between",
+      gap: 12
+    } }, /* @__PURE__ */ React.createElement(Btn, { variant: "quiet", onClick: prev }, /* @__PURE__ */ React.createElement(ChevronLeft, { size: 15 }), " Zurück"), screen !== "ende" && /* @__PURE__ */ React.createElement(Btn, { onClick: next }, screen === "toc" ? "Kapitel 1" : screen === CH.length ? "Abschluss" : "Weiter", " ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 15 }))), milestone && /* @__PURE__ */ React.createElement(
+      "div",
+      {
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-labelledby": "ms-t",
+        className: "no-print",
+        style: {
+          position: "fixed",
+          inset: 0,
+          zIndex: 60,
+          background: "rgba(74,59,46,0.42)",
+          display: "grid",
+          placeItems: "center",
+          padding: 22
+        },
+        onClick: () => setMilestone(null)
+      },
+      /* @__PURE__ */ React.createElement("div", { onClick: (e) => e.stopPropagation(), style: {
+        background: C.paper,
+        borderRadius: 18,
+        padding: "34px 26px 28px",
+        maxWidth: 400,
+        width: "100%",
+        textAlign: "center"
+      } }, /* @__PURE__ */ React.createElement("div", { "aria-hidden": "true", style: { color: C.terra, fontSize: 15, letterSpacing: 8, marginBottom: 14 } }, "✦"), /* @__PURE__ */ React.createElement("h3", { id: "ms-t", style: { fontFamily: SERIF, fontSize: 29, fontWeight: 500, color: C.ink, margin: "0 0 14px" } }, milestone.title), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.body, margin: "0 0 24px" } }, milestone.text), /* @__PURE__ */ React.createElement(Btn, { full: true, onClick: () => setMilestone(null) }, "Weiter"))
+    ), /* @__PURE__ */ React.createElement("div", { "aria-live": "polite", className: "no-print", style: {
+      position: "fixed",
+      bottom: 20,
+      left: "50%",
+      transform: `translateX(-50%) translateY(${saved ? "0" : "18px"})`,
+      opacity: saved ? 1 : 0,
+      transition: "all .3s",
+      pointerEvents: "none",
+      zIndex: 50,
+      background: C.ink,
+      color: C.white,
+      fontFamily: SANS,
+      fontSize: 13,
+      fontWeight: 400,
+      padding: "10px 20px",
+      borderRadius: 30,
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    } }, /* @__PURE__ */ React.createElement(Check, { size: 14, "aria-hidden": "true" }), " Gespeichert"));
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+})();
+
+</script>
+</body>
+</html>
