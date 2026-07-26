@@ -118,6 +118,33 @@ if (!window.React || !window.ReactDOM) {
   };
   const SERIF = "'Cormorant Garamond', Georgia, serif";
   const SANS = "'Poppins', sans-serif";
+  const CHAPTERS = [
+    { group: "Verstehen", intro: "Wo ihr gerade steht \u2013 und wie ihr tickt.", ids: [1, 2, 3, 4, 5, 6] },
+    { group: "Sprechen & Erleben", intro: "Die Gespr\xE4che und Abende, die sonst nie stattfinden.", ids: [7, 8, 9] },
+    { group: "Umsetzen", intro: "Damit es nicht bei guten Vors\xE4tzen bleibt.", ids: [10, 11, 12, 13, 14, 15] },
+    { group: "Dranbleiben", intro: "Der Teil, den die meisten weglassen \u2013 und der am meisten bringt.", ids: [16, 17, 18, 19] }
+  ];
+  const PART_DESC = {
+    1: "Warum das Alter fast nie das eigentliche Thema ist.",
+    2: "Zehn Fragen, danach wei\xDFt du, wie du in N\xE4he und Streit funktionierst. Mit Auswertung f\xFCr dich, deinen Partner und euch als Paar.",
+    3: "F\xFCnf Bereiche auf einer Skala \u2013 ergibt ein Bild, das man sofort versteht.",
+    4: "Sieben Lebensbereiche zum Ankreuzen. Nichts tippen.",
+    5: "F\xFCnfzehn Aussagen, danach kennt ihr eure Liebessprachen und die gr\xF6\xDFte L\xFCcke dazwischen.",
+    6: "Siebzig Begriffe zum Einkreisen. Am Ende stehen eure f\xFCnf wichtigsten Werte \u2013 und die Unterschiede.",
+    7: "48 Karten f\xFCr gemeinsame Abende \u2013 von emotionaler N\xE4he bis Zukunft.",
+    8: "\xDCber drei\xDFig Ideen f\xFCr alle vier Jahreszeiten. Merken, abhaken, eigene erg\xE4nzen.",
+    9: "Fertige S\xE4tze f\xFCr Familie, fremde Kommentare und schwierige Gespr\xE4che.",
+    10: "Alles, was ihr euch vornehmt, ehrlich nach Wirkung und Aufwand sortiert.",
+    11: "Kleine Gewohnheiten, eine Woche lang abhaken.",
+    12: "Sechs Vorhaben mit sichtbarem Fortschritt.",
+    13: "Ein einziges Ziel, so konkret, dass es \xFCberpr\xFCfbar wird.",
+    14: "Zwanzig Punkte in vier Bereichen \u2013 was ist gekl\xE4rt, was steht offen.",
+    15: "Finanzen, Lebensziele, Vorsorge, Werte. Die Themen vor dem Ernstfall.",
+    16: "Eure Tr\xE4ume als Karten auf einem Board \u2013 vom n\xE4chsten Jahr bis irgendwann.",
+    17: "Speicher euren Stand und sieh nach Monaten, was sich bewegt hat.",
+    18: "Wie viel Prozent f\xFChlt sich verbunden an \u2013 und drei Dinge mit Datum.",
+    19: "Was du mitnimmst, in deinen eigenen Worten."
+  };
   const ORD = [
     "",
     "eins",
@@ -135,7 +162,10 @@ if (!window.React || !window.ReactDOM) {
     "dreizehn",
     "vierzehn",
     "f\xFCnfzehn",
-    "sechzehn"
+    "sechzehn",
+    "siebzehn",
+    "achtzehn",
+    "neunzehn"
   ];
   const store = {
     async get(key) {
@@ -389,13 +419,48 @@ if (!window.React || !window.ReactDOM) {
     return "Ihr geht unterschiedlich mit N\xE4he und Konflikt um. Das ist kein Problem, solange ihr es benennt: Sag deinem Partner in einem Satz, was du in einem Streit brauchst \u2013 und lass ihn dasselbe tun. Die meisten Paare streiten nicht \xFCber das Thema, sondern \xFCber das Tempo.";
   }
   const LIFE_AREAS = [
-    "Alltag & Routine",
-    "Familie & Umfeld",
-    "Freunde",
-    "Intimit\xE4t & N\xE4he",
-    "Zukunft & Planung",
-    "Finanzen",
-    "Eigener Freiraum"
+    {
+      name: "Alltag & Routine",
+      good: ["Wir haben feste gemeinsame Zeiten", "Aufgaben sind fair verteilt", "Wir lachen im Alltag viel", "Wir wissen, wie der Tag des anderen l\xE4uft", "Absprachen klappen ohne Diskussion"],
+      need: ["Mehr gemeinsame Zeit", "Klarere Aufteilung der Aufgaben", "Weniger Streit \xFCber Kleinigkeiten", "Mehr Verl\xE4sslichkeit bei Pl\xE4nen", "Weniger Hektik zwischen T\xFCr und Angel"],
+      goal: ["Ein fester Abend pro Woche nur f\xFCr uns", "Sonntags f\xFCnf Minuten die Woche besprechen", "Eine Aufgabe dauerhaft neu verteilen", "Handys beim Essen weglegen"]
+    },
+    {
+      name: "Familie & Umfeld",
+      good: ["Meine Familie akzeptiert ihn", "Wir sind uns einig, wie wir auftreten", "Wir verteidigen einander nach au\xDFen", "Es gibt Menschen, die uns wirklich unterst\xFCtzen"],
+      need: ["Eine gemeinsame Linie gegen\xFCber der Familie", "Mehr R\xFCckendeckung von ihm", "Klarere Grenzen gegen\xFCber Angeh\xF6rigen", "Weniger Rechtfertigung im Freundeskreis"],
+      goal: ["Ein gemeinsamer Satz f\xFCr bl\xF6de Kommentare", "Ein Treffen mit meiner Familie planen", "Ein kl\xE4rendes Gespr\xE4ch mit einer bestimmten Person", "Bestimmte Themen aus Gespr\xE4chen raushalten"]
+    },
+    {
+      name: "Freunde",
+      good: ["Wir haben Freunde, die uns beide m\xF6gen", "Jeder hat noch eigene Freundschaften", "Wir unternehmen auch mal etwas zu viert", "Freundschaften belasten uns nicht"],
+      need: ["Mehr gemeinsame Freunde", "Mehr Zeit f\xFCr eigene Freundschaften", "Weniger Spannung wegen bestimmter Leute", "Mehr Verst\xE4ndnis f\xFCr die Freunde des anderen"],
+      goal: ["Ein Abend mit einem befreundeten Paar", "Jeder plant einen Abend nur mit Freunden", "Ein offenes Gespr\xE4ch \xFCber eine bestimmte Person"]
+    },
+    {
+      name: "Intimit\xE4t & N\xE4he",
+      good: ["Wir sind uns k\xF6rperlich nah im Alltag", "Wir k\xF6nnen offen \xFCber N\xE4he sprechen", "Z\xE4rtlichkeit passiert von allein", "Wir haben Rituale, die nur uns geh\xF6ren"],
+      need: ["Mehr N\xE4he im Alltag, nicht nur abends", "Offener \xFCber W\xFCnsche sprechen k\xF6nnen", "Mehr Zeit ohne Ablenkung", "Weniger Druck beim Thema N\xE4he"],
+      goal: ["Bewusst l\xE4nger umarmen", "Einmal in Ruhe \xFCber W\xFCnsche sprechen", "Ein Abend pro Woche ohne Bildschirm", "Eine Frage aus dem Fragen-Deck ziehen"]
+    },
+    {
+      name: "Zukunft & Planung",
+      good: ["Wir wissen, wo wir hinwollen", "Wir reden regelm\xE4\xDFig \xFCber die Zukunft", "Gro\xDFe Entscheidungen treffen wir gemeinsam", "Unsere Vorstellungen passen zusammen"],
+      need: ["Mehr Klarheit \xFCber die n\xE4chsten Jahre", "\xDCber schwierige Themen endlich sprechen", "Konkretere Pl\xE4ne statt vager Ideen", "Einigkeit beim Thema Wohnort", "Einigkeit beim Thema Familienplanung"],
+      goal: ["Ein Zukunfts-Abend mit zwei Stunden Zeit", "Ein konkretes Thema festlegen und kl\xE4ren", "Einen gemeinsamen Plan aufschreiben"]
+    },
+    {
+      name: "Finanzen",
+      good: ["Wir wissen beide, wie der andere steht", "Wir streiten selten \xFCber Geld", "Die Aufteilung f\xFChlt sich fair an", "Wir sparen auf etwas Gemeinsames"],
+      need: ["Mehr Offenheit \xFCber Zahlen", "Eine faire Aufteilung finden", "R\xFCcklagen aufbauen", "\xDCber Absicherung sprechen", "Weniger Anspannung beim Thema Geld"],
+      goal: ["Einmal alle Zahlen offen auf den Tisch legen", "Eine Aufteilung festlegen", "Einen Dauerauftrag f\xFCrs Sparen einrichten"]
+    },
+    {
+      name: "Eigener Freiraum",
+      good: ["Jeder hat etwas nur f\xFCr sich", "Freiraum wird nicht pers\xF6nlich genommen", "Ich kann allein sein, ohne mich zu erkl\xE4ren", "Wir g\xF6nnen einander unsere Hobbys"],
+      need: ["Mehr Zeit f\xFCr mich allein", "Weniger schlechtes Gewissen dabei", "Ein eigenes Hobby wieder aufnehmen", "Klarere Absprachen \xFCber Alleinzeit"],
+      goal: ["Ein fester Nachmittag nur f\xFCr mich", "Ein altes Hobby wieder anfangen", "Freiraum ank\xFCndigen statt ihn zu nehmen"]
+    }
   ];
   const SCRIPTS = [
     {
@@ -521,23 +586,174 @@ if (!window.React || !window.ReactDOM) {
     "\xDCber den Tag erz\xE4hlen",
     "Eine Sache zu zweit planen"
   ];
+  const VISION_SUGGEST = [
+    "Ein gemeinsames Zuhause",
+    "Ein Kind",
+    "Zwei Kinder",
+    "Ein Hund",
+    "Heiraten",
+    "Eine gro\xDFe Reise",
+    "Ein Jahr im Ausland",
+    "Ein eigenes Auto",
+    "Weniger arbeiten",
+    "Etwas Eigenes aufbauen",
+    "Ein Garten",
+    "Ein Wochenende nur wir zwei",
+    "Eine gemeinsame Sprache lernen",
+    "N\xE4her ans Meer ziehen",
+    "Finanziell sorgenfrei sein"
+  ];
+  const VISION_WHEN = [
+    { k: "jahr", label: "Dieses Jahr" },
+    { k: "fuenf", label: "In f\xFCnf Jahren" },
+    { k: "irgendwann", label: "Irgendwann" }
+  ];
+  const VALUES = [
+    "Abenteuer",
+    "Akzeptanz",
+    "Anerkennung",
+    "Ausgeglichenheit",
+    "Ausstrahlung",
+    "Beharrlichkeit",
+    "Bescheidenheit",
+    "Bindung",
+    "Charme",
+    "Dankbarkeit",
+    "Disziplin",
+    "Ehrlichkeit",
+    "Einzigartigkeit",
+    "Empathie",
+    "Erfolg",
+    "Fairness",
+    "Familie",
+    "Freiheit",
+    "Freude",
+    "Freundschaft",
+    "Frieden",
+    "Geborgenheit",
+    "Gelassenheit",
+    "Gem\xFCtlichkeit",
+    "Gerechtigkeit",
+    "Gesundheit",
+    "Glaubw\xFCrdigkeit",
+    "Gro\xDFz\xFCgigkeit",
+    "Harmonie",
+    "Herausforderung",
+    "Hilfsbereitschaft",
+    "Humor",
+    "Inspiration",
+    "Klarheit",
+    "Kreativit\xE4t",
+    "Leichtigkeit",
+    "Leidenschaft",
+    "Loyalit\xE4t",
+    "Mitgef\xFChl",
+    "Mut",
+    "N\xE4he",
+    "Natur",
+    "Neugier",
+    "Offenheit",
+    "Optimismus",
+    "Ordnung",
+    "Privatsph\xE4re",
+    "P\xFCnktlichkeit",
+    "Respekt",
+    "Ruhe",
+    "Selbstbestimmung",
+    "Sicherheit",
+    "Sinnlichkeit",
+    "Spontaneit\xE4t",
+    "Stabilit\xE4t",
+    "Struktur",
+    "Toleranz",
+    "Tradition",
+    "Treue",
+    "Unabh\xE4ngigkeit",
+    "Verl\xE4sslichkeit",
+    "Verst\xE4ndnis",
+    "Vertrauen",
+    "Wachstum",
+    "W\xE4rme",
+    "Wertsch\xE4tzung",
+    "Z\xE4rtlichkeit",
+    "Zugeh\xF6rigkeit",
+    "Zusammenhalt",
+    "Zuversicht"
+  ];
+  const SCRIBBLE_PATHS = [
+    "M50 7C79 6 96 22 96 49C96 77 78 94 49 94C21 94 4 76 4 49C4 23 21 8 45 6",
+    "M52 5C81 8 97 25 95 52C93 79 74 95 46 94C19 93 3 74 5 47C7 22 25 7 50 6C58 6 66 8 70 11",
+    "M48 8C77 5 95 24 96 51C97 76 77 95 48 95C22 95 4 75 5 48C6 24 22 9 44 7"
+  ];
+  const SEASONS = [
+    { k: "fruehling", label: "Fr\xFChling" },
+    { k: "sommer", label: "Sommer" },
+    { k: "herbst", label: "Herbst" },
+    { k: "winter", label: "Winter" }
+  ];
+  const DATE_IDEAS = {
+    fruehling: [
+      { t: "Den ersten warmen Abend drau\xDFen verbringen, ohne Plan", c: "Drau\xDFen" },
+      { t: "Einen Markt besuchen und blind je drei Zutaten kaufen, daraus kocht ihr", c: "G\xFCnstig" },
+      { t: "Fahrradtour zu einem Ort, an dem keiner von euch war", c: "Drau\xDFen" },
+      { t: "Balkon oder Fensterbank gemeinsam bepflanzen", c: "Zuhause" },
+      { t: "Fr\xFChst\xFCck im Gr\xFCnen, mit Decke und viel zu viel Essen", c: "G\xFCnstig" },
+      { t: "Sonnenaufgang anschauen, einmal richtig fr\xFCh aufstehen", c: "Besonders" },
+      { t: "Den Kleiderschrank ausmisten und euch gegenseitig Outfits zusammenstellen", c: "Zuhause" },
+      { t: "Eine Stadt in der N\xE4he besuchen, die ihr immer \xFCbersehen habt", c: "Besonders" }
+    ],
+    sommer: [
+      { t: "Abends baden gehen, wenn alle anderen schon weg sind", c: "Drau\xDFen" },
+      { t: "Autokino oder Freiluftkino", c: "Besonders" },
+      { t: "Eine Nacht drau\xDFen schlafen, notfalls im Garten", c: "Besonders" },
+      { t: "Eisdielen-Tour: drei L\xE4den, je eine Kugel, ihr k\xFCrt die beste", c: "G\xFCnstig" },
+      { t: "Zusammen etwas grillen, das keiner von euch je gemacht hat", c: "Zuhause" },
+      { t: "Barfu\xDF durch einen Fluss laufen, egal wie kalt", c: "G\xFCnstig" },
+      { t: "Ein Sonnenuntergang mit Musik und nichts weiter", c: "Drau\xDFen" },
+      { t: "Spontan ins Auto und zwei Stunden in eine Richtung fahren", c: "Besonders" }
+    ],
+    herbst: [
+      { t: "Waldspaziergang und danach hei\xDFe Schokolade", c: "Drau\xDFen" },
+      { t: "Zusammen etwas backen, das schiefgehen darf", c: "Zuhause" },
+      { t: "Regentag auf dem Sofa, Handys aus, zwei Filme", c: "Zuhause" },
+      { t: "K\xFCrbis, Kerzen, Wohnung umdekorieren", c: "G\xFCnstig" },
+      { t: "Flohmarkt und jeder sucht dem anderen etwas unter f\xFCnf Euro", c: "G\xFCnstig" },
+      { t: "Museum oder Ausstellung, danach ausf\xFChrlich streiten, was gut war", c: "Besonders" },
+      { t: "Ein altes Fotoalbum durchgehen, jeder erz\xE4hlt drei Geschichten", c: "Zuhause" },
+      { t: "Therme oder Sauna, ein ganzer Nachmittag ohne Uhr", c: "Besonders" }
+    ],
+    winter: [
+      { t: "Weihnachtsmarkt, aber nur wegen des Gl\xFChweins", c: "Drau\xDFen" },
+      { t: "Ein Brettspiel-Abend mit echten Eins\xE4tzen", c: "Zuhause" },
+      { t: "Schlittschuhlaufen, auch wenn es keiner kann", c: "Drau\xDFen" },
+      { t: "Ein Men\xFC zu zweit kochen, drei G\xE4nge, Kerzenlicht", c: "Besonders" },
+      { t: "Ein Wochenende in einer H\xFCtte ohne Empfang", c: "Besonders" },
+      { t: "Zusammen die Fotos des Jahres sortieren und ein Album machen", c: "Zuhause" },
+      { t: "Ein langer Winterspaziergang, dann eine hei\xDFe Dusche", c: "G\xFCnstig" },
+      { t: "Silvesterr\xFCckblick: jeder nennt f\xFCnf Momente des Jahres", c: "G\xFCnstig" }
+    ]
+  };
+  const DATE_CATS = ["Alle", "Zuhause", "Drau\xDFen", "G\xFCnstig", "Besonders"];
   const PARTS = [
     { id: 1, label: "Mindset" },
     { id: 2, label: "Beziehungstyp" },
     { id: 3, label: "Beziehungs-Rad" },
     { id: 4, label: "Lebensbereiche" },
     { id: 5, label: "Liebessprachen" },
-    { id: 6, label: "Abend-Fragen" },
-    { id: 7, label: "Gespr\xE4chs-Skripte" },
-    { id: 8, label: "Priorit\xE4ten" },
-    { id: 9, label: "7-Tage-Tracker" },
-    { id: 10, label: "Fortschritt" },
-    { id: 11, label: "Unser Ziel" },
-    { id: 12, label: "Checkliste" },
-    { id: 13, label: "Zukunfts-Werkstatt" },
-    { id: 14, label: "Standortbestimmung" },
-    { id: 15, label: "Aktionsplan" },
-    { id: 16, label: "Deine Learnings" }
+    { id: 6, label: "Was uns wichtig ist" },
+    { id: 7, label: "Abend-Fragen" },
+    { id: 8, label: "Date-Ideen" },
+    { id: 9, label: "Gespr\xE4chs-Skripte" },
+    { id: 10, label: "Priorit\xE4ten" },
+    { id: 11, label: "7-Tage-Tracker" },
+    { id: 12, label: "Fortschritt" },
+    { id: 13, label: "Unser Ziel" },
+    { id: 14, label: "Checkliste" },
+    { id: 15, label: "Zukunfts-Werkstatt" },
+    { id: 16, label: "Visionboard" },
+    { id: 17, label: "Standortbestimmung" },
+    { id: 18, label: "Aktionsplan" },
+    { id: 19, label: "Deine Learnings" }
   ];
   const MOOD_KEYS = [
     { k: "nah", label: "Verbunden" },
@@ -716,7 +932,7 @@ if (!window.React || !window.ReactDOM) {
     const [loaded, setLoaded] = useState(false);
     const [showSaved, setShowSaved] = useState(false);
     const [copied, setCopied] = useState(null);
-    const [drafts, setDrafts] = useState({ quick: "", big: "", small: "", drain: "" });
+    const [drafts, setDrafts] = useState({ quick: "", big: "", small: "", drain: "", date: "", vision: "", visionWhen: "irgendwann" });
     const saveTimer = useRef(null);
     const pillTimer = useRef(null);
     const [d, setD] = useState({
@@ -744,6 +960,15 @@ if (!window.React || !window.ReactDOM) {
         { t: "", v: 0 }
       ],
       progressNote: "",
+      values: { mine: [], his: [] },
+      valuesTop: { mine: [], his: [] },
+      valuesWho: "mine",
+      vision: [],
+      dateSeason: "fruehling",
+      dateCat: "Alle",
+      dateFavs: [],
+      dateDone: [],
+      dateOwn: [],
       snapshots: [],
       mood: { nah: 60, mittel: 30, fern: 10 },
       actions: [{ w: "", d: "" }, { w: "", d: "" }, { w: "", d: "" }],
@@ -797,9 +1022,17 @@ if (!window.React || !window.ReactDOM) {
       if (typeof s === "number") up((p) => ({ ...p, visited: { ...p.visited, [s]: true } }));
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
-    const idx = typeof screen === "number" ? screen : screen === "welcome" ? 0 : PARTS.length + 1;
-    const next = () => go(idx === 0 ? 1 : idx >= PARTS.length ? "closing" : idx + 1);
-    const prev = () => go(idx <= 1 ? "welcome" : idx - 1);
+    const idx = typeof screen === "number" ? screen : screen === "welcome" ? 0 : screen === "toc" ? 0.5 : PARTS.length + 1;
+    const next = () => {
+      if (screen === "welcome") return go("toc");
+      if (screen === "toc") return go(1);
+      return go(idx >= PARTS.length ? "closing" : idx + 1);
+    };
+    const prev = () => {
+      if (screen === "toc") return go("welcome");
+      if (screen === 1) return go("toc");
+      return go(idx <= 1 ? "welcome" : idx - 1);
+    };
     const loveScores = useMemo(() => {
       const calc = (who) => {
         const src = d.love[who] || {};
@@ -852,8 +1085,42 @@ if (!window.React || !window.ReactDOM) {
           num: true,
           onChange: (v) => up((p) => ({ ...p, profile: { ...p.profile, agePartner: v } }))
         }
-      )), gap != null && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 18, paddingTop: 16, borderTop: `1px solid ${C.line}`, fontFamily: SANS, fontSize: 14, fontWeight: 300, color: C.inkSoft, lineHeight: 1.55 } }, gap === 0 ? "Ihr seid gleich alt. Auch dann sind Lebensphasen selten identisch \u2013 die \xDCbungen funktionieren genauso." : /* @__PURE__ */ React.createElement(React.Fragment, null, "Zwischen euch liegen ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, gap, " Jahre"), ". Das sind rund ", gap * 12, " Monate unterschiedlicher Lebenserfahrung \u2013 und damit auch unterschiedliche Selbstverst\xE4ndlichkeiten."))), /* @__PURE__ */ React.createElement(Btn, { onClick: () => go(1) }, "Loslegen ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 15 })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 34, borderTop: `1px solid ${C.line}`, paddingTop: 20, fontFamily: SANS, fontSize: 13, fontWeight: 300, color: C.inkSoft } }, "Tipp: Teil 6 ist das Herzst\xFCck. Nimm dir daf\xFCr einen Abend zu zweit."));
+      )), gap != null && /* @__PURE__ */ React.createElement("div", { style: { marginTop: 18, paddingTop: 16, borderTop: `1px solid ${C.line}`, fontFamily: SANS, fontSize: 14, fontWeight: 300, color: C.inkSoft, lineHeight: 1.55 } }, gap === 0 ? "Ihr seid gleich alt. Auch dann sind Lebensphasen selten identisch \u2013 die \xDCbungen funktionieren genauso." : /* @__PURE__ */ React.createElement(React.Fragment, null, "Zwischen euch liegen ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, gap, " Jahre"), ". Das sind rund ", gap * 12, " Monate unterschiedlicher Lebenserfahrung \u2013 und damit auch unterschiedliche Selbstverst\xE4ndlichkeiten."))), /* @__PURE__ */ React.createElement(Btn, { onClick: () => go("toc") }, "Loslegen ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 15 })), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 34, borderTop: `1px solid ${C.line}`, paddingTop: 20, fontFamily: SANS, fontSize: 13, fontWeight: 300, color: C.inkSoft } }, "Tipp: Teil 7 ist das Herzst\xFCck. Nimm dir daf\xFCr einen Abend zu zweit."));
     };
+    const Toc = () => /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", marginBottom: 34 } }, /* @__PURE__ */ React.createElement("div", { style: { color: C.line, fontSize: 18, letterSpacing: 9, marginBottom: 18 } }, "\u2727 \u2727 \u2727"), /* @__PURE__ */ React.createElement("h2", { style: { fontFamily: SERIF, fontWeight: 500, fontSize: "clamp(32px, 8vw, 46px)", lineHeight: 1.08, color: C.ink, margin: "0 0 16px" } }, d.profile.me ? `${d.profile.me}, das erwartet dich` : "Das erwartet dich"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 16, fontWeight: 300, lineHeight: 1.6, color: C.inkSoft, maxWidth: 470, margin: "0 auto" } }, "Sechzehn Teile in vier Abschnitten. Du musst sie nicht der Reihe nach machen und nicht an einem Tag \u2013 \xFCber die Punkte oben kommst du jederzeit \xFCberall hin. Alles wird automatisch gespeichert.")), CHAPTERS.map((ch) => /* @__PURE__ */ React.createElement("div", { key: ch.group, style: { marginBottom: 30 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "baseline", gap: 12, marginBottom: 4 } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 13, letterSpacing: 3, fontWeight: 600, textTransform: "uppercase", color: C.gold } }, ch.group), /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 1, background: C.line } })), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 13.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 14 } }, ch.intro), ch.ids.map((id) => {
+      const part = PARTS.find((x) => x.id === id);
+      return /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: id,
+          onClick: () => go(id),
+          style: {
+            display: "flex",
+            gap: 14,
+            alignItems: "flex-start",
+            width: "100%",
+            textAlign: "left",
+            background: C.card,
+            border: "none",
+            borderRadius: 14,
+            cursor: "pointer",
+            padding: "16px 18px",
+            marginBottom: 8
+          }
+        },
+        /* @__PURE__ */ React.createElement("span", { style: {
+          fontFamily: SERIF,
+          fontSize: 22,
+          fontWeight: 500,
+          color: C.blush,
+          width: 26,
+          flexShrink: 0,
+          lineHeight: 1.1
+        } }, id),
+        /* @__PURE__ */ React.createElement("span", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("span", { style: { display: "block", fontFamily: SANS, fontSize: 15.5, fontWeight: 500, color: C.ink, marginBottom: 3 } }, part.label), /* @__PURE__ */ React.createElement("span", { style: { display: "block", fontFamily: SANS, fontSize: 13.5, fontWeight: 300, lineHeight: 1.5, color: C.inkSoft } }, PART_DESC[id])),
+        /* @__PURE__ */ React.createElement(ChevronRight, { size: 16, color: C.line, style: { flexShrink: 0, marginTop: 4 } })
+      );
+    }))), /* @__PURE__ */ React.createElement("div", { style: { background: C.white, border: `1px solid ${C.blush}`, borderRadius: 14, padding: "22px 20px", marginBottom: 26 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 13, letterSpacing: 3, fontWeight: 600, textTransform: "uppercase", color: C.gold, marginBottom: 10 } }, "Wie du am meisten davon hast"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.inkSoft, margin: "0 0 12px" } }, "Mach Teil 1 bis 6 allein und in Ruhe \u2013 daf\xFCr brauchst du etwa eine Stunde. Teil 6 ist der Abend zu zweit. Alles ab Teil 10 funktioniert nur gemeinsam."), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.inkSoft, margin: 0 } }, "Und komm in ein paar Monaten nochmal zur\xFCck. Teil 17 zeigt dir dann schwarz auf wei\xDF, was sich ver\xE4ndert hat.")), /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center" } }, /* @__PURE__ */ React.createElement(Btn, { onClick: () => go(1) }, "Mit Teil 1 beginnen ", /* @__PURE__ */ React.createElement(ChevronRight, { size: 15 }))));
     const P1 = () => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Bevor es um Werkzeuge geht, um die Grundannahme: Das Alter ist selten das eigentliche Thema. Es ist der Rahmen, in dem die eigentlichen Themen sichtbar werden." }, "Mindset"), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, lineHeight: 1.75, color: C.ink, margin: 0 } }, "Was von au\xDFen wie ein Altersproblem aussieht, ist meistens etwas anderes: unterschiedliche Lebensphasen, unterschiedliche Erfahrung, unterschiedliche Geschwindigkeit. Das gibt es in jeder Beziehung. Bei euch ist es nur besser sichtbar \u2013 und das ist im Grunde ein Vorteil. Ihr k\xF6nnt nichts \xFCbersehen, was andere Paare zehn Jahre lang unter den Teppich kehren.")), /* @__PURE__ */ React.createElement(
       Field,
       {
@@ -981,46 +1248,73 @@ if (!window.React || !window.ReactDOM) {
         onChange: (v) => up((p) => ({ ...p, wheelNotes: { ...p.wheelNotes, [it.id]: v } }))
       }
     ))));
-    const P3 = () => /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Geh die Bereiche einzeln durch. Erst was gut l\xE4uft \u2013 das wird viel zu selten benannt. Dann, wo etwas fehlt. Und dann ein einziges konkretes Ziel." }, "Lebensbereiche-Check"), (() => {
-      const filled = LIFE_AREAS.filter((a) => (d.areas[a] || {}).good || (d.areas[a] || {}).need);
-      const needs = LIFE_AREAS.filter((a) => ((d.areas[a] || {}).need || "").trim().length > 0);
-      const goals = LIFE_AREAS.filter((a) => ((d.areas[a] || {}).goal || "").trim().length > 0);
-      if (filled.length < 2) return null;
-      return /* @__PURE__ */ React.createElement(Result, { title: "Dein Zwischenstand" }, /* @__PURE__ */ React.createElement(ResultText, null, "Du hast ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, needs.length, " von ", LIFE_AREAS.length), " Bereichen als Baustelle markiert", needs.length > 0 ? /* @__PURE__ */ React.createElement(React.Fragment, null, ": ", needs.join(", "), ".") : "."), /* @__PURE__ */ React.createElement(ResultText, null, needs.length === 0 ? "Bisher ist nichts als Bedarf markiert. Geh die Bereiche nochmal durch und frag dich bei jedem: Wenn ich einen davon per Knopfdruck verbessern k\xF6nnte \u2013 welcher w\xE4re es?" : needs.length <= 2 ? "Das ist \xFCberschaubar und gut so. Wenige klare Baustellen lassen sich wirklich angehen \u2013 im Gegensatz zu einer langen Liste, die niemand abarbeitet." : needs.length <= 4 ? "Eine typische Zahl. Wichtig ist jetzt die Reihenfolge: Fang mit dem Bereich an, der die anderen mit beeinflusst. Meistens ist das Alltag & Routine oder Intimit\xE4t & N\xE4he \u2013 wenn die stimmen, wird der Rest leichter." : "Das ist viel auf einmal. Bevor ihr irgendetwas plant: W\xE4hl genau einen Bereich f\xFCr die n\xE4chsten vier Wochen und lass die anderen bewusst liegen. Alles gleichzeitig zu wollen ist der h\xE4ufigste Grund, warum am Ende nichts passiert."), goals.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { background: C.card, borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", color: C.ink, marginBottom: 8 } }, "Deine Ziele im \xDCberblick"), goals.map((a) => /* @__PURE__ */ React.createElement("div", { key: a, style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, lineHeight: 1.55, color: C.inkSoft, marginBottom: 6 } }, /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.ink } }, a, ":"), " ", d.areas[a].goal))));
-    })(), LIFE_AREAS.map((area) => {
-      const v = d.areas[area] || {};
-      return /* @__PURE__ */ React.createElement(Card, { key: area }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 23, color: C.ink, borderBottom: `1px solid ${C.lineSoft}`, paddingBottom: 10, marginBottom: 16 } }, area), /* @__PURE__ */ React.createElement(
-        Field,
-        {
-          label: "Was l\xE4uft gut",
-          rows: 2,
-          value: v.good,
-          hint: "Auch Kleinigkeiten z\xE4hlen. Was funktioniert hier so selbstverst\xE4ndlich, dass ihr es nie erw\xE4hnt?",
-          placeholder: "Zum Beispiel: Wir schaffen es fast immer, gemeinsam zu essen.",
-          onChange: (x) => up((p) => ({ ...p, areas: { ...p.areas, [area]: { ...v, good: x } } }))
-        }
-      ), /* @__PURE__ */ React.createElement(
-        Field,
-        {
-          label: "Wo brauchen wir mehr",
-          rows: 2,
-          value: v.need,
-          hint: "Was fehlt dir hier \u2013 Zeit, Klarheit, Unterst\xFCtzung, Leichtigkeit, Verl\xE4sslichkeit?",
-          placeholder: "Zum Beispiel: Verl\xE4sslichkeit. Pl\xE4ne werden oft kurzfristig umgeworfen.",
-          onChange: (x) => up((p) => ({ ...p, areas: { ...p.areas, [area]: { ...v, need: x } } }))
-        }
-      ), /* @__PURE__ */ React.createElement(
-        Field,
-        {
-          label: "Unser Ziel",
-          rows: 2,
-          value: v.goal,
-          hint: "Formulier es so klein, dass ihr diese Woche damit anfangen k\xF6nnt.",
-          placeholder: "Zum Beispiel: Sonntagabend f\xFCnf Minuten die Woche durchgehen.",
-          onChange: (x) => up((p) => ({ ...p, areas: { ...p.areas, [area]: { ...v, goal: x } } }))
-        }
-      ));
-    }));
+    const P3 = () => {
+      const pick = (area, group, opt) => up((p) => {
+        const cur = { ...p.areas[area] || {} };
+        const list = Array.isArray(cur[group]) ? [...cur[group]] : [];
+        const i = list.indexOf(opt);
+        if (i >= 0) list.splice(i, 1);
+        else list.push(opt);
+        cur[group] = list;
+        return { ...p, areas: { ...p.areas, [area]: cur } };
+      });
+      const sel = (area, group) => {
+        const v = (d.areas[area] || {})[group];
+        return Array.isArray(v) ? v : [];
+      };
+      const GROUPS = [
+        { k: "good", label: "Was l\xE4uft gut", hint: "Kreuz alles an, was zutrifft. Ruhig gro\xDFz\xFCgig \u2013 das Gute wird meistens untersch\xE4tzt." },
+        { k: "need", label: "Wo braucht ihr mehr", hint: "Auch hier gilt: Mehrfachauswahl. Sei ehrlich, das sieht niemand au\xDFer dir." },
+        { k: "goal", label: "Was ihr euch vornehmt", hint: "Such dir h\xF6chstens zwei aus. Mehr schafft im Alltag ohnehin niemand." }
+      ];
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Sieben Bereiche, drei Fragen pro Bereich. Nichts tippen \u2013 einfach ankreuzen, was zutrifft. Am Ende bekommst du eine Auswertung, wo ihr anfangen solltet." }, "Lebensbereiche-Check"), (() => {
+        const needs = LIFE_AREAS.filter((a) => sel(a.name, "need").length > 0);
+        const goals = LIFE_AREAS.filter((a) => sel(a.name, "goal").length > 0);
+        const touched = LIFE_AREAS.filter((a) => sel(a.name, "good").length + sel(a.name, "need").length > 0);
+        if (touched.length < 2) return null;
+        const heaviest = [...needs].sort((a, b) => sel(b.name, "need").length - sel(a.name, "need").length)[0];
+        return /* @__PURE__ */ React.createElement(Result, { title: "Dein Zwischenstand" }, /* @__PURE__ */ React.createElement(ResultText, null, "Du hast ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, needs.length, " von ", LIFE_AREAS.length), " Bereichen als Baustelle markiert", needs.length > 0 ? /* @__PURE__ */ React.createElement(React.Fragment, null, ": ", needs.map((a) => a.name).join(", "), ".") : "."), /* @__PURE__ */ React.createElement(ResultText, null, needs.length === 0 ? "Bisher ist nichts als Bedarf markiert. Geh die Bereiche nochmal durch und frag dich bei jedem: Wenn ich einen davon per Knopfdruck verbessern k\xF6nnte \u2013 welcher w\xE4re es?" : needs.length <= 2 ? "Das ist \xFCberschaubar und gut so. Wenige klare Baustellen lassen sich wirklich angehen, im Gegensatz zu einer langen Liste, die niemand abarbeitet." : needs.length <= 4 ? "Eine typische Zahl. Wichtig ist jetzt die Reihenfolge: Fang mit dem Bereich an, der die anderen mit beeinflusst. Meistens ist das Alltag & Routine oder Intimit\xE4t & N\xE4he \u2013 wenn die stimmen, wird der Rest leichter." : "Das ist viel auf einmal. Bevor ihr irgendetwas plant: W\xE4hl genau einen Bereich f\xFCr die n\xE4chsten vier Wochen und lass die anderen bewusst liegen. Alles gleichzeitig zu wollen ist der h\xE4ufigste Grund, warum am Ende nichts passiert."), heaviest && /* @__PURE__ */ React.createElement(ResultText, null, "Am meisten angekreuzt hast du bei ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600 } }, heaviest.name), ". Dort liegt gerade euer Schwerpunkt \u2013 nimm dir f\xFCr Teil 13 ein Ziel aus genau diesem Bereich."), goals.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { background: C.card, borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", color: C.ink, marginBottom: 8 } }, "Was ihr euch vorgenommen habt"), goals.map((a) => /* @__PURE__ */ React.createElement("div", { key: a.name, style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, lineHeight: 1.55, color: C.inkSoft, marginBottom: 7 } }, /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.ink } }, a.name, ":"), " ", sel(a.name, "goal").join(" \xB7 ")))));
+      })(), LIFE_AREAS.map((area) => /* @__PURE__ */ React.createElement(Card, { key: area.name }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 25, fontWeight: 500, color: C.ink, borderBottom: `1px solid ${C.line}`, paddingBottom: 12, marginBottom: 20 } }, area.name), GROUPS.map((g, gi) => /* @__PURE__ */ React.createElement("div", { key: g.k, style: { marginBottom: gi === GROUPS.length - 1 ? 0 : 24 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 500, color: C.ink, marginBottom: 4 } }, g.label), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 12, lineHeight: 1.5 } }, g.hint), area[g.k].map((opt) => {
+        const on = sel(area.name, g.k).includes(opt);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: opt,
+            onClick: () => pick(area.name, g.k, opt),
+            style: {
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 11,
+              width: "100%",
+              textAlign: "left",
+              padding: "11px 14px",
+              marginBottom: 7,
+              cursor: "pointer",
+              borderRadius: 10,
+              border: `1px solid ${on ? C.blush : C.line}`,
+              background: on ? C.blush : C.white,
+              color: on ? C.white : C.inkSoft,
+              fontFamily: SANS,
+              fontSize: 14.5,
+              fontWeight: 300,
+              lineHeight: 1.5
+            }
+          },
+          /* @__PURE__ */ React.createElement("span", { style: {
+            width: 17,
+            height: 17,
+            flexShrink: 0,
+            marginTop: 2,
+            borderRadius: 5,
+            border: `1px solid ${on ? C.white : C.line}`,
+            background: on ? C.white : "transparent",
+            display: "grid",
+            placeItems: "center"
+          } }, on && /* @__PURE__ */ React.createElement(Check, { size: 10, color: C.blush })),
+          opt
+        );
+      }))))));
+    };
     const P4 = () => {
       const who = d.loveWho;
       const scores = loveScores[who];
@@ -1182,42 +1476,558 @@ if (!window.React || !window.ReactDOM) {
     };
     const P7 = () => {
       const QUADS = [
-        { k: "quick", t: "Sofort umsetzen", s: "viel Wirkung, wenig Aufwand" },
-        { k: "big", t: "Gro\xDFe Vorhaben", s: "viel Wirkung, viel Aufwand" },
-        { k: "small", t: "Nebenbei", s: "wenig Wirkung, wenig Aufwand" },
-        { k: "drain", t: "Kraftfresser", s: "wenig Wirkung, viel Aufwand" }
+        { k: "quick", t: "Sofort umsetzen", impact: "Viel Wirkung", effort: "Wenig Aufwand", note: "Hier fangt ihr an. Diese Dinge ver\xE4ndern viel und kosten wenig.", hero: true },
+        { k: "big", t: "Gro\xDFe Vorhaben", impact: "Viel Wirkung", effort: "Viel Aufwand", note: "Wichtig, aber nicht nebenbei. Plant daf\xFCr einen festen Termin ein." },
+        { k: "small", t: "Nebenbei", impact: "Wenig Wirkung", effort: "Wenig Aufwand", note: "Nette Kleinigkeiten. Macht sie, wenn gerade Luft ist \u2013 aber ohne Plan." },
+        { k: "drain", t: "Kraftfresser", impact: "Wenig Wirkung", effort: "Viel Aufwand", note: "Was hier landet, d\xFCrft ihr streichen. Wirklich." }
       ];
       const add = (k) => {
-        const t = drafts[k].trim();
+        const t = (drafts[k] || "").trim();
         if (!t) return;
         up((p) => ({ ...p, matrix: { ...p.matrix, [k]: [...p.matrix[k], t] } }));
-        setDrafts((s) => ({ ...s, [k]: "" }));
+        setDrafts((s2) => ({ ...s2, [k]: "" }));
       };
-      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Sammle alles, was ihr euch f\xFCr eure Beziehung vorgenommen habt, und sortier es ehrlich ein. Was unten rechts landet, d\xFCrft ihr streichen." }, "Priorit\xE4ten-Matrix"), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 } }, QUADS.map((q) => /* @__PURE__ */ React.createElement("div", { key: q.k, style: {
-        background: q.k === "quick" ? C.white : C.card,
-        border: q.k === "quick" ? `1px solid ${C.blush}` : "none",
+      const total = QUADS.reduce((a, q) => a + d.matrix[q.k].length, 0);
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Sammle alles, was ihr euch f\xFCr eure Beziehung vorgenommen habt, und sortier es ehrlich ein: Wie viel bringt es \u2013 und wie viel kostet es?" }, "Priorit\xE4ten-Matrix"), QUADS.map((q) => /* @__PURE__ */ React.createElement("div", { key: q.k, style: {
+        background: q.hero ? C.white : C.card,
+        border: q.hero ? `1px solid ${C.blush}` : "none",
         borderRadius: 14,
-        padding: "18px 15px",
-        minHeight: 180,
+        padding: "22px 20px 20px",
+        marginBottom: 16
+      } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 10 } }, [q.impact, q.effort].map((tag) => /* @__PURE__ */ React.createElement("span", { key: tag, style: {
+        fontFamily: SANS,
+        fontSize: 10.5,
+        fontWeight: 600,
+        letterSpacing: 1.2,
+        textTransform: "uppercase",
+        color: C.muted,
+        border: `1px solid ${C.line}`,
+        borderRadius: 20,
+        padding: "4px 11px"
+      } }, tag))), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: C.ink, lineHeight: 1.15, marginBottom: 6 } }, q.t), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 13.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 18, lineHeight: 1.5 } }, q.note), d.matrix[q.k].length > 0 && /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 14 } }, d.matrix[q.k].map((item, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: {
         display: "flex",
-        flexDirection: "column"
-      } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SERIF, fontSize: 17, color: C.ink, lineHeight: 1.15 } }, q.t), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 9.5, letterSpacing: "0.08em", textTransform: "uppercase", color: C.inkSoft, margin: "5px 0 12px" } }, q.s), /* @__PURE__ */ React.createElement("div", { style: { flex: 1 } }, d.matrix[q.k].map((item, i) => /* @__PURE__ */ React.createElement("div", { key: i, style: { display: "flex", gap: 6, alignItems: "flex-start", marginBottom: 7 } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 12.5, lineHeight: 1.45, color: C.ink, flex: 1 } }, item), /* @__PURE__ */ React.createElement(
+        gap: 10,
+        alignItems: "flex-start",
+        background: q.hero ? C.card : C.white,
+        borderRadius: 10,
+        padding: "11px 13px",
+        marginBottom: 7
+      } }, /* @__PURE__ */ React.createElement("span", { style: { color: C.blush, flexShrink: 0, lineHeight: 1.5 } }, "\xB7"), /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 14.5, fontWeight: 300, lineHeight: 1.5, color: C.inkSoft, flex: 1 } }, item), /* @__PURE__ */ React.createElement(
         "button",
         {
           onClick: () => up((p) => ({ ...p, matrix: { ...p.matrix, [q.k]: p.matrix[q.k].filter((_, j) => j !== i) } })),
-          style: { background: "none", border: "none", cursor: "pointer", padding: 0 }
+          style: { background: "none", border: "none", cursor: "pointer", padding: 2, flexShrink: 0 }
         },
-        /* @__PURE__ */ React.createElement(X, { size: 12, color: C.line })
-      )))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 8 } }, /* @__PURE__ */ React.createElement(
+        /* @__PURE__ */ React.createElement(X, { size: 14, color: C.muted })
+      )))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } }, /* @__PURE__ */ React.createElement(
         "input",
         {
-          value: drafts[q.k],
-          placeholder: "Hinzuf\xFCgen",
-          onChange: (e) => setDrafts((s) => ({ ...s, [q.k]: e.target.value })),
+          value: drafts[q.k] || "",
+          placeholder: "Was geh\xF6rt hier rein?",
+          onChange: (e) => setDrafts((s2) => ({ ...s2, [q.k]: e.target.value })),
           onKeyDown: (e) => e.key === "Enter" && add(q.k),
-          style: { flex: 1, minWidth: 0, fontFamily: SANS, fontSize: 12, padding: "7px 10px", borderRadius: 8, border: `1px solid ${C.line}`, background: C.white, outline: "none", color: C.ink }
+          style: {
+            flex: 1,
+            minWidth: 0,
+            fontFamily: SANS,
+            fontSize: 14.5,
+            fontWeight: 300,
+            padding: "11px 14px",
+            borderRadius: 10,
+            border: `1px solid ${C.line}`,
+            background: q.hero ? C.card : C.white,
+            outline: "none",
+            color: C.ink
+          }
         }
-      ), /* @__PURE__ */ React.createElement("button", { onClick: () => add(q.k), style: { background: C.blush, border: "none", borderRadius: 8, cursor: "pointer", padding: "0 11px", color: C.white } }, /* @__PURE__ */ React.createElement(Plus, { size: 13 })))))));
+      ), /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          onClick: () => add(q.k),
+          style: {
+            background: C.blush,
+            border: "none",
+            borderRadius: 10,
+            cursor: "pointer",
+            padding: "0 16px",
+            color: C.white,
+            display: "grid",
+            placeItems: "center",
+            flexShrink: 0
+          }
+        },
+        /* @__PURE__ */ React.createElement(Plus, { size: 16 })
+      )))), total >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Was das hei\xDFt" }, /* @__PURE__ */ React.createElement(ResultText, null, "Ihr habt ", total, " Punkte einsortiert. Davon liegen ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, d.matrix.quick.length), ' im Bereich \u201ESofort umsetzen" \u2013 das sind die einzigen, die ihr diese Woche wirklich angehen solltet.'), d.matrix.quick.length === 0 && /* @__PURE__ */ React.createElement(ResultText, null, "Bisher steht dort nichts. Das ist der h\xE4ufigste Fehler: Paare planen die gro\xDFen Dinge und \xFCbersehen die kleinen, die sofort etwas ver\xE4ndern. Geh nochmal durch, was du oben eingetragen hast \u2013 l\xE4sst sich davon etwas in eine Zehn-Minuten-Version verkleinern?"), d.matrix.drain.length > 0 && /* @__PURE__ */ React.createElement(ResultText, null, "Und ", d.matrix.drain.length, " ", d.matrix.drain.length === 1 ? "Punkt steht" : "Punkte stehen", " bei den Kraftfressern. Streich ", d.matrix.drain.length === 1 ? "ihn" : "sie", " bewusst \u2013 nicht irgendwann, sondern jetzt. Was viel kostet und wenig bringt, blockiert im Kopf mehr Platz, als es wert ist.")));
+    };
+    const PValues = () => {
+      const who = d.valuesWho;
+      const picked = d.values[who] || [];
+      const top = d.valuesTop[who] || [];
+      const nameFor = (k) => k === "mine" ? d.profile.me || "Du" : d.profile.partner || "Dein Partner";
+      const circle = (w) => up((p) => {
+        const cur = p.values[who] || [];
+        const on = cur.includes(w);
+        const nextPicked = on ? cur.filter((x) => x !== w) : [...cur, w];
+        const nextTop = on ? (p.valuesTop[who] || []).filter((x) => x !== w) : p.valuesTop[who] || [];
+        return { ...p, values: { ...p.values, [who]: nextPicked }, valuesTop: { ...p.valuesTop, [who]: nextTop } };
+      });
+      const promote = (w) => up((p) => {
+        const cur = p.valuesTop[who] || [];
+        if (cur.includes(w)) return { ...p, valuesTop: { ...p.valuesTop, [who]: cur.filter((x) => x !== w) } };
+        if (cur.length >= 5) return p;
+        return { ...p, valuesTop: { ...p.valuesTop, [who]: [...cur, w] } };
+      });
+      const bothTop = (d.valuesTop.mine || []).length === 5 && (d.valuesTop.his || []).length === 5;
+      const shared = bothTop ? d.valuesTop.mine.filter((x) => d.valuesTop.his.includes(x)) : [];
+      const onlyMine = bothTop ? d.valuesTop.mine.filter((x) => !d.valuesTop.his.includes(x)) : [];
+      const onlyHis = bothTop ? d.valuesTop.his.filter((x) => !d.valuesTop.mine.includes(x)) : [];
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Kreis alles ein, was dir wirklich wichtig ist \u2013 ruhig gro\xDFz\xFCgig, zwanzig bis drei\xDFig sind normal. Danach engst du es auf f\xFCnf ein. Erst dann wird es interessant." }, "Was uns wichtig ist"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 0, marginBottom: 22, background: C.card, borderRadius: 30, padding: 4 } }, ["mine", "his"].map((k) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: k,
+          onClick: () => up((p) => ({ ...p, valuesWho: k })),
+          style: {
+            flex: 1,
+            padding: "12px 0",
+            cursor: "pointer",
+            border: "none",
+            borderRadius: 30,
+            background: who === k ? C.blush : "transparent",
+            color: who === k ? C.white : C.inkSoft,
+            fontFamily: SANS,
+            fontSize: 14,
+            fontWeight: 500
+          }
+        },
+        nameFor(k),
+        " ",
+        /* @__PURE__ */ React.createElement("span", { style: { opacity: 0.7, fontWeight: 300 } }, "(", (d.values[k] || []).length, ")")
+      ))), /* @__PURE__ */ React.createElement("div", { style: {
+        background: C.white,
+        borderRadius: 14,
+        padding: "30px 18px 26px",
+        marginBottom: 22,
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        columnGap: 6,
+        rowGap: 14
+      } }, VALUES.map((w, i) => {
+        const on = picked.includes(w);
+        const variant = SCRIBBLE_PATHS[i % SCRIBBLE_PATHS.length];
+        const tilt = [-2.5, 1.8, -1.2, 2.4][i % 4];
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: w,
+            onClick: () => circle(w),
+            style: {
+              position: "relative",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "9px 13px",
+              margin: 0,
+              fontFamily: SERIF,
+              fontSize: 18,
+              fontWeight: on ? 600 : 400,
+              color: on ? C.ink : C.inkSoft,
+              lineHeight: 1.1
+            }
+          },
+          on && /* @__PURE__ */ React.createElement(
+            "svg",
+            {
+              viewBox: "0 0 100 100",
+              preserveAspectRatio: "none",
+              "aria-hidden": "true",
+              style: {
+                position: "absolute",
+                inset: "-4px -2px",
+                width: "calc(100% + 4px)",
+                height: "calc(100% + 8px)",
+                transform: `rotate(${tilt}deg)`,
+                pointerEvents: "none"
+              }
+            },
+            /* @__PURE__ */ React.createElement(
+              "path",
+              {
+                d: variant,
+                fill: "none",
+                stroke: C.blush,
+                strokeWidth: "2.2",
+                strokeLinecap: "round",
+                vectorEffect: "non-scaling-stroke"
+              }
+            )
+          ),
+          w
+        );
+      })), picked.length > 0 && /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 500, color: C.ink, marginBottom: 4 } }, "Jetzt die schwere \xDCbung: streich runter auf f\xFCnf"), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 14, lineHeight: 1.5 } }, "Tipp an, was \xFCbrig bleiben soll. Nicht was gut klingt \u2013 sondern das, wof\xFCr du im Zweifel etwas anderes aufgeben w\xFCrdest.", top.length > 0 && ` Noch ${5 - top.length} frei.`), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7 } }, picked.map((w) => {
+        const isTop = top.includes(w);
+        return /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            key: w,
+            onClick: () => promote(w),
+            style: {
+              padding: "9px 15px",
+              cursor: "pointer",
+              borderRadius: 20,
+              border: `1px solid ${isTop ? C.blush : C.line}`,
+              background: isTop ? C.blush : C.white,
+              color: isTop ? C.white : C.inkSoft,
+              fontFamily: SANS,
+              fontSize: 13.5,
+              fontWeight: isTop ? 500 : 300,
+              opacity: !isTop && top.length >= 5 ? 0.45 : 1
+            }
+          },
+          w
+        );
+      }))), top.length === 5 && /* @__PURE__ */ React.createElement(Result, { title: `Die f\xFCnf Werte von ${nameFor(who)}` }, /* @__PURE__ */ React.createElement("div", { style: { marginBottom: 18 } }, top.map((w, i) => /* @__PURE__ */ React.createElement("div", { key: w, style: { display: "flex", gap: 14, alignItems: "baseline", padding: "10px 0", borderBottom: i < 4 ? `1px solid ${C.line}` : "none" } }, /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SERIF, fontSize: 20, fontWeight: 500, color: C.blush, width: 20, flexShrink: 0 } }, i + 1), /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SERIF, fontSize: 24, fontWeight: 500, color: C.ink } }, w)))), /* @__PURE__ */ React.createElement(ResultText, null, "Diese f\xFCnf sind ab jetzt dein Ma\xDFstab. Wenn ihr das n\xE4chste Mal \xFCber eine gr\xF6\xDFere Entscheidung streitet, schau hier drauf \u2013 meistens kollidiert nicht die Meinung, sondern ein Wert."), /* @__PURE__ */ React.createElement(ResultText, null, "Und die Werte, die du eingekreist, aber wieder gestrichen hast, sind nicht unwichtig. Sie sind nur nicht das, wof\xFCr du im Ernstfall etwas anderes opfern w\xFCrdest. Das zu wissen ist die halbe Miete.")), bothTop && /* @__PURE__ */ React.createElement(Card, { style: { background: C.cardDeep } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 13, letterSpacing: 3, fontWeight: 600, textTransform: "uppercase", color: C.ink, marginBottom: 14 } }, "Euer Vergleich"), [
+        ["Gemeinsam", shared, "Das ist euer Fundament. Erinnert euch daran, wenn es mal schwierig wird."],
+        [`Nur ${nameFor("mine")}`, onlyMine, "Hier braucht dein Partner Erkl\xE4rung, keine Zustimmung."],
+        [`Nur ${nameFor("his")}`, onlyHis, "Und hier musst du nicht zustimmen \u2013 nur verstehen, warum es z\xE4hlt."]
+      ].map(([h, arr, note]) => /* @__PURE__ */ React.createElement("div", { key: h, style: { marginBottom: 18 } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", color: C.ink, marginBottom: 8 } }, h), arr.length === 0 ? /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, color: C.muted, margin: 0, fontStyle: "italic" } }, "Keine.") : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 8 } }, arr.map((w) => /* @__PURE__ */ React.createElement("span", { key: w, style: {
+        fontFamily: SERIF,
+        fontSize: 18,
+        fontWeight: 500,
+        color: C.ink,
+        background: C.white,
+        borderRadius: 20,
+        padding: "6px 15px"
+      } }, w))), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 13.5, fontWeight: 300, lineHeight: 1.6, color: C.inkSoft, margin: 0 } }, note)))), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.7, color: C.inkSoft, margin: 0 } }, shared.length >= 3 ? "Ihr teilt die meisten Kernwerte. Das erkl\xE4rt, warum vieles bei euch von allein funktioniert \u2013 und hei\xDFt umgekehrt: Wenn es kracht, geht es fast nie ums Grunds\xE4tzliche, sondern um die Umsetzung." : shared.length >= 1 ? "Ein gemeinsamer Kern und deutliche Unterschiede \u2013 das ist die h\xE4ufigste und tragf\xE4higste Kombination. Wichtig ist nur, dass ihr die Unterschiede kennt, statt sie f\xFCr Sturheit zu halten." : "Ihr habt keinen Wert gemeinsam in den Top f\xFCnf. Das ist kein Alarmzeichen, aber ein Auftrag: Geht die zehn Begriffe zusammen durch und lasst euch je erkl\xE4ren, was der andere darunter versteht. Oft meint ihr dasselbe und nennt es anders.")));
+    };
+    const PDates = () => {
+      const season = SEASONS.find((x) => x.k === d.dateSeason) || SEASONS[0];
+      const own = d.dateOwn.filter((o) => o.s === season.k);
+      const list = [
+        ...DATE_IDEAS[season.k].map((x, i) => ({ ...x, id: `${season.k}-${i}` })),
+        ...own.map((o, i) => ({ t: o.t, c: o.c || "Eigene", id: `${season.k}-own-${i}`, mine: true }))
+      ];
+      const shown = d.dateCat === "Alle" ? list : list.filter((x) => x.c === d.dateCat);
+      const toggle = (field, id) => up((p) => ({
+        ...p,
+        [field]: p[field].includes(id) ? p[field].filter((x) => x !== id) : [...p[field], id]
+      }));
+      const doneCount = d.dateDone.length;
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "\xDCber drei\xDFig Ideen, sortiert nach Jahreszeit. Nichts davon ist teuer oder aufwendig. Merk dir, worauf ihr Lust habt, und hak ab, was ihr gemacht habt." }, "Date-Ideen"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 0, marginBottom: 14, background: C.card, borderRadius: 30, padding: 4 } }, SEASONS.map((x) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: x.k,
+          onClick: () => up((p) => ({ ...p, dateSeason: x.k })),
+          style: {
+            flex: 1,
+            padding: "11px 0",
+            cursor: "pointer",
+            border: "none",
+            borderRadius: 30,
+            background: d.dateSeason === x.k ? C.blush : "transparent",
+            color: d.dateSeason === x.k ? C.white : C.inkSoft,
+            fontFamily: SANS,
+            fontSize: 13,
+            fontWeight: 500
+          }
+        },
+        x.label
+      ))), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 22 } }, DATE_CATS.map((c) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: c,
+          onClick: () => up((p) => ({ ...p, dateCat: c })),
+          style: {
+            padding: "8px 15px",
+            cursor: "pointer",
+            borderRadius: 20,
+            border: `1px solid ${d.dateCat === c ? C.blush : C.line}`,
+            background: d.dateCat === c ? C.blush : "transparent",
+            color: d.dateCat === c ? C.white : C.inkSoft,
+            fontFamily: SANS,
+            fontSize: 12.5,
+            fontWeight: 400
+          }
+        },
+        c
+      ))), /* @__PURE__ */ React.createElement(Card, null, shown.length === 0 && /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14.5, fontWeight: 300, color: C.inkSoft, margin: 0 } }, "In dieser Kategorie ist f\xFCr ", season.label.toLowerCase(), " noch nichts dabei. Trag unten eine eigene Idee ein."), shown.map((item) => {
+        const fav = d.dateFavs.includes(item.id);
+        const done = d.dateDone.includes(item.id);
+        return /* @__PURE__ */ React.createElement("div", { key: item.id, style: {
+          display: "flex",
+          gap: 12,
+          alignItems: "flex-start",
+          padding: "14px 0",
+          borderBottom: `1px solid ${C.line}`
+        } }, /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            onClick: () => toggle("dateDone", item.id),
+            style: {
+              width: 21,
+              height: 21,
+              flexShrink: 0,
+              marginTop: 2,
+              borderRadius: 6,
+              cursor: "pointer",
+              border: `1px solid ${done ? C.blush : C.line}`,
+              background: done ? C.blush : C.white,
+              display: "grid",
+              placeItems: "center",
+              padding: 0
+            }
+          },
+          done && /* @__PURE__ */ React.createElement(Check, { size: 12, color: C.white })
+        ), /* @__PURE__ */ React.createElement("div", { style: { flex: 1, minWidth: 0 } }, /* @__PURE__ */ React.createElement("div", { style: {
+          fontFamily: SANS,
+          fontSize: 15,
+          fontWeight: 300,
+          lineHeight: 1.5,
+          color: done ? C.muted : C.inkSoft,
+          textDecoration: done ? "line-through" : "none"
+        } }, item.t), /* @__PURE__ */ React.createElement("span", { style: {
+          display: "inline-block",
+          marginTop: 7,
+          fontFamily: SANS,
+          fontSize: 10.5,
+          fontWeight: 600,
+          letterSpacing: 1.2,
+          textTransform: "uppercase",
+          color: C.muted,
+          border: `1px solid ${C.line}`,
+          borderRadius: 20,
+          padding: "3px 10px"
+        } }, item.c)), /* @__PURE__ */ React.createElement(
+          "button",
+          {
+            onClick: () => toggle("dateFavs", item.id),
+            style: { background: "none", border: "none", cursor: "pointer", padding: 4, flexShrink: 0 }
+          },
+          /* @__PURE__ */ React.createElement(Heart, { size: 17, color: fav ? C.blush : C.line, fill: fav ? C.blush : "none" })
+        ));
+      })), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 500, color: C.ink, marginBottom: 4 } }, "Eigene Idee f\xFCr ", season.label.toLowerCase()), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 12 } }, "Was habt ihr euch schon lange vorgenommen und nie gemacht?"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8 } }, /* @__PURE__ */ React.createElement(
+        "input",
+        {
+          value: drafts.date || "",
+          placeholder: "Eintragen und hinzuf\xFCgen",
+          onChange: (e) => setDrafts((x) => ({ ...x, date: e.target.value })),
+          onKeyDown: (e) => {
+            if (e.key !== "Enter" || !(drafts.date || "").trim()) return;
+            up((p) => ({ ...p, dateOwn: [...p.dateOwn, { s: season.k, t: drafts.date.trim(), c: "Eigene" }] }));
+            setDrafts((x) => ({ ...x, date: "" }));
+          },
+          style: {
+            flex: 1,
+            minWidth: 0,
+            fontFamily: SANS,
+            fontSize: 14.5,
+            fontWeight: 300,
+            padding: "11px 14px",
+            borderRadius: 10,
+            border: `1px solid ${C.line}`,
+            background: C.white,
+            outline: "none",
+            color: C.ink
+          }
+        }
+      ), /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          onClick: () => {
+            if (!(drafts.date || "").trim()) return;
+            up((p) => ({ ...p, dateOwn: [...p.dateOwn, { s: season.k, t: drafts.date.trim(), c: "Eigene" }] }));
+            setDrafts((x) => ({ ...x, date: "" }));
+          },
+          style: { background: C.blush, border: "none", borderRadius: 10, cursor: "pointer", padding: "0 16px", color: C.white, display: "grid", placeItems: "center", flexShrink: 0 }
+        },
+        /* @__PURE__ */ React.createElement(Plus, { size: 16 })
+      ))), (d.dateFavs.length > 0 || doneCount > 0) && /* @__PURE__ */ React.createElement(Result, { title: "Euer Stand" }, /* @__PURE__ */ React.createElement(ResultText, null, "Ihr habt ", /* @__PURE__ */ React.createElement("strong", { style: { fontWeight: 600, color: C.blush } }, doneCount), " ", doneCount === 1 ? "Date" : "Dates", " abgehakt und ", d.dateFavs.length, " auf der Merkliste.", doneCount === 0 ? " Such dir eins von der Merkliste aus und setz es diese Woche in den Kalender \u2013 sonst bleibt es eine Liste." : doneCount < 5 ? " Guter Anfang. Nehmt euch vor, jeden Monat mindestens eins davon zu machen." : " Das ist mehr als die meisten Paare in einem Jahr schaffen. Genau das ist der Unterschied zwischen guten Vors\xE4tzen und einer lebendigen Beziehung."), d.dateFavs.length > 0 && /* @__PURE__ */ React.createElement("div", { style: { background: C.card, borderRadius: 10, padding: "14px 16px" } }, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", color: C.ink, marginBottom: 9 } }, "Eure Merkliste"), d.dateFavs.map((id) => {
+        var _a;
+        const sk = id.split("-")[0];
+        const isOwn = id.includes("-own-");
+        const idx2 = Number(id.split("-").pop());
+        const txt = isOwn ? (d.dateOwn.filter((o) => o.s === sk)[idx2] || {}).t : (_a = (DATE_IDEAS[sk] || [])[idx2]) == null ? void 0 : _a.t;
+        if (!txt) return null;
+        return /* @__PURE__ */ React.createElement("div", { key: id, style: { display: "flex", gap: 9, marginBottom: 7 } }, /* @__PURE__ */ React.createElement(Heart, { size: 13, color: C.blush, fill: C.blush, style: { flexShrink: 0, marginTop: 3 } }), /* @__PURE__ */ React.createElement("span", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 300, lineHeight: 1.5, color: C.inkSoft } }, txt));
+      }))));
+    };
+    const PVision = () => {
+      const addVision = (text, when) => {
+        const t = (text || "").trim();
+        if (!t) return;
+        up((p) => ({ ...p, vision: [...p.vision, { t, w: when || "irgendwann" }] }));
+      };
+      const openSuggest = VISION_SUGGEST.filter((x) => !d.vision.some((v) => v.t === x));
+      return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(Title, { sub: "Alles, was ihr euch f\xFCr euer gemeinsames Leben w\xFCnscht \u2013 als Karten auf einem Board. Tipp eine Idee an oder schreib eine eigene dazu." }, "Visionboard"), /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 14, fontWeight: 500, color: C.ink, marginBottom: 4 } }, "Eigenen Wunsch hinzuf\xFCgen"), /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 300, fontStyle: "italic", color: C.muted, marginBottom: 12 } }, "Kurz halten \u2013 zwei, drei W\xF6rter reichen. Das Board lebt von Schlagw\xF6rtern, nicht von S\xE4tzen."), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 8, marginBottom: 12 } }, /* @__PURE__ */ React.createElement(
+        "input",
+        {
+          value: drafts.vision || "",
+          placeholder: "Zum Beispiel: Ein Haus mit Garten",
+          onChange: (e) => setDrafts((x) => ({ ...x, vision: e.target.value })),
+          onKeyDown: (e) => {
+            if (e.key !== "Enter") return;
+            addVision(drafts.vision, drafts.visionWhen);
+            setDrafts((x) => ({ ...x, vision: "" }));
+          },
+          style: {
+            flex: 1,
+            minWidth: 0,
+            fontFamily: SANS,
+            fontSize: 14.5,
+            fontWeight: 300,
+            padding: "11px 14px",
+            borderRadius: 10,
+            border: `1px solid ${C.line}`,
+            background: C.white,
+            outline: "none",
+            color: C.ink
+          }
+        }
+      ), /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          onClick: () => {
+            addVision(drafts.vision, drafts.visionWhen);
+            setDrafts((x) => ({ ...x, vision: "" }));
+          },
+          style: { background: C.blush, border: "none", borderRadius: 10, cursor: "pointer", padding: "0 16px", color: C.white, display: "grid", placeItems: "center", flexShrink: 0 }
+        },
+        /* @__PURE__ */ React.createElement(Plus, { size: 16 })
+      )), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", gap: 7 } }, VISION_WHEN.map((w) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: w.k,
+          onClick: () => setDrafts((x) => ({ ...x, visionWhen: w.k })),
+          style: {
+            flex: 1,
+            padding: "9px 6px",
+            cursor: "pointer",
+            borderRadius: 20,
+            border: `1px solid ${(drafts.visionWhen || "irgendwann") === w.k ? C.blush : C.line}`,
+            background: (drafts.visionWhen || "irgendwann") === w.k ? C.blush : "transparent",
+            color: (drafts.visionWhen || "irgendwann") === w.k ? C.white : C.inkSoft,
+            fontFamily: SANS,
+            fontSize: 12,
+            fontWeight: 400
+          }
+        },
+        w.label
+      )))), openSuggest.length > 0 && /* @__PURE__ */ React.createElement(Card, null, /* @__PURE__ */ React.createElement("div", { style: { fontFamily: SANS, fontSize: 12.5, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", color: C.ink, marginBottom: 12 } }, "Zum Antippen"), /* @__PURE__ */ React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 7 } }, openSuggest.map((x) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: x,
+          onClick: () => addVision(x, drafts.visionWhen),
+          style: {
+            padding: "9px 14px",
+            cursor: "pointer",
+            borderRadius: 20,
+            border: `1px solid ${C.line}`,
+            background: C.white,
+            color: C.inkSoft,
+            fontFamily: SANS,
+            fontSize: 13,
+            fontWeight: 300,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 7
+          }
+        },
+        /* @__PURE__ */ React.createElement(Plus, { size: 12, color: C.blush }),
+        " ",
+        x
+      )))), d.vision.length === 0 ? /* @__PURE__ */ React.createElement(Card, { style: { textAlign: "center", padding: "44px 24px" } }, /* @__PURE__ */ React.createElement("div", { style: { color: C.line, fontSize: 18, letterSpacing: 9, marginBottom: 14 } }, "\u2727 \u2727 \u2727"), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 14.5, fontWeight: 300, lineHeight: 1.65, color: C.inkSoft, margin: 0 } }, "Euer Board ist noch leer. Fang mit drei Dingen an \u2013 eins f\xFCrs n\xE4chste Jahr, eins f\xFCr in f\xFCnf Jahren, eins, von dem du nicht wei\xDFt, ob es je passiert.")) : /* @__PURE__ */ React.createElement("div", { style: {
+        background: C.cardDeep,
+        borderRadius: 16,
+        padding: "26px 16px 12px",
+        marginBottom: 22
+      } }, VISION_WHEN.map((w) => {
+        const items = d.vision.map((v, i) => ({ ...v, i })).filter((v) => v.w === w.k);
+        if (items.length === 0) return null;
+        return /* @__PURE__ */ React.createElement("div", { key: w.k, style: { marginBottom: 26 } }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 20 } }, /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 1, background: C.line } }), /* @__PURE__ */ React.createElement("span", { style: {
+          fontFamily: SANS,
+          fontSize: 11.5,
+          letterSpacing: 3,
+          fontWeight: 600,
+          textTransform: "uppercase",
+          color: C.ink
+        } }, w.label), /* @__PURE__ */ React.createElement("span", { style: { flex: 1, height: 1, background: C.line } })), /* @__PURE__ */ React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 } }, items.map((v, n) => {
+          const tilt = [-2.6, 2.1, 1.4, -1.7, 2.8, -2.2][n % 6];
+          return /* @__PURE__ */ React.createElement("div", { key: v.i, style: {
+            position: "relative",
+            transform: `rotate(${tilt}deg)`,
+            transition: "transform .25s"
+          } }, /* @__PURE__ */ React.createElement("div", { style: {
+            background: C.white,
+            borderRadius: 3,
+            padding: "16px 12px 20px",
+            boxShadow: "0 6px 18px rgba(91,74,56,0.16)"
+          } }, /* @__PURE__ */ React.createElement("div", { style: {
+            background: `linear-gradient(150deg, ${C.card} 0%, ${C.cardDeep} 100%)`,
+            borderRadius: 2,
+            minHeight: 88,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px 10px",
+            marginBottom: 12
+          } }, /* @__PURE__ */ React.createElement("span", { style: {
+            fontFamily: "'Dancing Script', cursive",
+            fontSize: 25,
+            fontWeight: 700,
+            lineHeight: 1.15,
+            color: C.ink,
+            textAlign: "center"
+          } }, v.t)), /* @__PURE__ */ React.createElement("div", { style: {
+            fontFamily: SANS,
+            fontSize: 9.5,
+            letterSpacing: 1.6,
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: C.muted,
+            textAlign: "center"
+          } }, w.label)), /* @__PURE__ */ React.createElement("span", { style: {
+            position: "absolute",
+            top: -9,
+            left: "50%",
+            transform: "translateX(-50%) rotate(-3deg)",
+            width: 52,
+            height: 17,
+            borderRadius: 1,
+            background: "rgba(184,130,138,0.32)",
+            border: "1px solid rgba(184,130,138,0.22)"
+          } }), /* @__PURE__ */ React.createElement(
+            "button",
+            {
+              onClick: () => up((p) => ({ ...p, vision: p.vision.filter((_, j) => j !== v.i) })),
+              "aria-label": "Entfernen",
+              style: {
+                position: "absolute",
+                top: -7,
+                right: -7,
+                width: 24,
+                height: 24,
+                borderRadius: "50%",
+                border: `1px solid ${C.line}`,
+                background: C.white,
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                padding: 0,
+                boxShadow: "0 2px 6px rgba(91,74,56,0.14)"
+              }
+            },
+            /* @__PURE__ */ React.createElement(X, { size: 11, color: C.muted })
+          ));
+        })));
+      })), d.vision.length >= 3 && /* @__PURE__ */ React.createElement(Result, { title: "Was euer Board zeigt" }, /* @__PURE__ */ React.createElement(ResultText, null, (() => {
+        const j = d.vision.filter((v) => v.w === "jahr").length;
+        const f = d.vision.filter((v) => v.w === "fuenf").length;
+        const i = d.vision.filter((v) => v.w === "irgendwann").length;
+        if (j === 0) return "Auf eurem Board steht nichts f\xFCr dieses Jahr. Tr\xE4ume ohne einen nahen Schritt bleiben Tr\xE4ume \u2013 nimm einen Punkt aus \u201EIrgendwann\u201D und frag dich, welche kleine Version davon ihr in den n\xE4chsten zw\xF6lf Monaten schaffen k\xF6nntet.";
+        if (i > j + f) return "Der gr\xF6\xDFte Teil eurer W\xFCnsche liegt im Irgendwann. Das ist sch\xF6n, aber unverbindlich. Zieh zwei Punkte bewusst nach vorn \u2013 erst mit einer Jahreszahl werden sie zu Pl\xE4nen.";
+        if (j >= 3) return "Ihr habt euch f\xFCr dieses Jahr einiges vorgenommen. Pr\xFCf ehrlich, ob das nebeneinander geht \u2013 und wenn nicht, welche zwei davon euch am wichtigsten sind.";
+        return "Euer Board ist gut verteilt: etwas Nahes, etwas Mittelfristiges, etwas Gro\xDFes. Genau so sollte es aussehen.";
+      })()), /* @__PURE__ */ React.createElement(ResultText, null, "Nimm dir einen Punkt aus \u201EDieses Jahr\u201D mit in Teil 13 und mach daraus ein Ziel, das \xFCberpr\xFCfbar ist.")));
     };
     const P8 = () => {
       const DAYS = ["M", "D", "M", "D", "F", "S", "S"];
@@ -1511,7 +2321,7 @@ if (!window.React || !window.ReactDOM) {
         onChange: (v) => up((p) => ({ ...p, learnings: v }))
       }
     ));
-    const Closing = () => /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", paddingTop: 30 } }, /* @__PURE__ */ React.createElement(Sparkles, { size: 26, color: C.blush, style: { marginBottom: 20 } }), /* @__PURE__ */ React.createElement("h2", { style: { fontFamily: SERIF, fontWeight: 500, fontSize: "clamp(34px, 8vw, 48px)", lineHeight: 1.1, color: C.ink, margin: "0 0 18px" } }, "Das war es.", /* @__PURE__ */ React.createElement("br", null), "F\xFCrs Erste."), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 17, fontWeight: 300, lineHeight: 1.6, color: C.inkSoft, maxWidth: 460, margin: "0 auto 38px" } }, d.profile.me ? `${d.profile.me}, alles` : "Alles", " bleibt gespeichert. Komm in ein paar Monaten zur\xFCck, stell das Beziehungs-Rad neu ein und speicher in Teil 14 einen zweiten Stand. Die Ver\xE4nderung zwischen den beiden St\xE4nden ist der eigentliche Wert dieses Workbooks."), /* @__PURE__ */ React.createElement(Btn, { variant: "ghost", onClick: () => go("welcome") }, "Zur\xFCck zum Anfang"), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 42, borderTop: `1px solid ${C.line}`, paddingTop: 22 } }, /* @__PURE__ */ React.createElement(
+    const Closing = () => /* @__PURE__ */ React.createElement("div", { style: { textAlign: "center", paddingTop: 30 } }, /* @__PURE__ */ React.createElement(Sparkles, { size: 26, color: C.blush, style: { marginBottom: 20 } }), /* @__PURE__ */ React.createElement("h2", { style: { fontFamily: SERIF, fontWeight: 500, fontSize: "clamp(34px, 8vw, 48px)", lineHeight: 1.1, color: C.ink, margin: "0 0 18px" } }, "Das war es.", /* @__PURE__ */ React.createElement("br", null), "F\xFCrs Erste."), /* @__PURE__ */ React.createElement("p", { style: { fontFamily: SANS, fontSize: 17, fontWeight: 300, lineHeight: 1.6, color: C.inkSoft, maxWidth: 460, margin: "0 auto 38px" } }, d.profile.me ? `${d.profile.me}, alles` : "Alles", " bleibt gespeichert. Komm in ein paar Monaten zur\xFCck, stell das Beziehungs-Rad neu ein und speicher in Teil 17 einen zweiten Stand. Die Ver\xE4nderung zwischen den beiden St\xE4nden ist der eigentliche Wert dieses Workbooks."), /* @__PURE__ */ React.createElement(Btn, { variant: "ghost", onClick: () => go("toc") }, "Zur \xDCbersicht"), /* @__PURE__ */ React.createElement("div", { style: { marginTop: 42, borderTop: `1px solid ${C.line}`, paddingTop: 22 } }, /* @__PURE__ */ React.createElement(
       "button",
       {
         onClick: async () => {
@@ -1533,19 +2343,22 @@ if (!window.React || !window.ReactDOM) {
       3: P2,
       4: P3,
       5: P4,
-      6: P5,
-      7: P6,
-      8: P7,
-      9: P8,
-      10: PProgress,
-      11: P9,
-      12: P10,
-      13: P11,
-      14: PSnapshots,
-      15: PAction,
-      16: P12
+      6: PValues,
+      7: P5,
+      8: PDates,
+      9: P6,
+      10: P7,
+      11: P8,
+      12: PProgress,
+      13: P9,
+      14: P10,
+      15: P11,
+      16: PVision,
+      17: PSnapshots,
+      18: PAction,
+      19: P12
     };
-    const Current = screen === "welcome" ? Welcome : screen === "closing" ? Closing : SCREENS[screen];
+    const Current = screen === "welcome" ? Welcome : screen === "toc" ? Toc : screen === "closing" ? Closing : SCREENS[screen];
     return /* @__PURE__ */ React.createElement("div", { style: { minHeight: "100vh", background: C.paper, paddingBottom: 90 } }, typeof screen === "number" && /* @__PURE__ */ React.createElement("div", { style: { position: "sticky", top: 0, zIndex: 20, background: C.paper, borderBottom: `1px solid ${C.line}`, padding: "13px 18px" } }, /* @__PURE__ */ React.createElement("div", { style: { maxWidth: 660, margin: "0 auto", display: "flex", alignItems: "center", gap: 5, overflowX: "auto" } }, PARTS.map((p) => /* @__PURE__ */ React.createElement(
       "button",
       {
